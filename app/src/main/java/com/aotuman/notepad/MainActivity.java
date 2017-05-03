@@ -4,19 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.aotuman.notepad.define.IMainView;
+import com.aotuman.notepad.fragment.LeftFragment;
 import com.aotuman.notepad.imp.MainPresenter;
 
 public class MainActivity extends Activity implements IMainView {
     private MainPresenter mMainPresenter;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-
+    private LeftFragment mLeftFragment;
     public MainActivity() {
         mMainPresenter = new MainPresenter(this);
     }
@@ -29,8 +28,10 @@ public class MainActivity extends Activity implements IMainView {
     }
 
     private void initView() {
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
+//        mLeftFragment = (LeftFragment) getSupportFragmentManager().findFragmentById(R.id.left_frame);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
@@ -51,5 +52,14 @@ public class MainActivity extends Activity implements IMainView {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    ;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+// The action bar home/up actionshould open or close the drawer.
+// ActionBarDrawerToggle will takecare of this.
+        if(mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        //处理其他菜单点击事件
+        return super.onOptionsItemSelected(item);
+    }
 }
