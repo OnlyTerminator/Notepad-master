@@ -11,17 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.aotuman.notepad.define.IMainView;
+import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.fragment.LeftFragment;
 import com.aotuman.notepad.imp.MainPresenter;
 
-public class MainActivity extends Activity implements IMainView {
-    private MainPresenter mMainPresenter;
+import java.util.List;
+
+public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LeftFragment mLeftFragment;
-    public MainActivity() {
-        mMainPresenter = new MainPresenter(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
