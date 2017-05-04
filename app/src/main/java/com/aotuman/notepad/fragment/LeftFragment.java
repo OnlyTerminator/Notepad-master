@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aotuman.notepad.MainActivity;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.NotepadGroupAdapter;
+import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
 import com.aotuman.notepad.define.IMainView;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.imp.MainPresenter;
@@ -26,7 +28,7 @@ import java.util.List;
  * Created by aotuman on 2017/5/3.
  */
 
-public class LeftFragment extends Fragment implements IMainView,View.OnClickListener {
+public class LeftFragment extends Fragment implements IMainView,View.OnClickListener,OnGroupClickListener{
     private static final String TAG = "LeftFragment";
     private View mView;
     private ImageView mHeadImageView;
@@ -62,15 +64,22 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
         mRecycleView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new NotepadGroupAdapter(mGroupInfoList, LeftFragment.this.getActivity());
+        mAdapter.setOnGroupClickListener(this);
         mRecycleView.setAdapter(mAdapter);
     }
 
     private void initData(){
         mMainPresenter.getLeftData();
     }
+
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void onClick(GroupInfo groupInfo) {
+        Toast.makeText(this.getActivity(),groupInfo.groupName,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -89,4 +98,5 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
     public void updatePersonalIcon(String path) {
         Log.i(TAG, "updatePersonalIcon: ");
     }
+
 }

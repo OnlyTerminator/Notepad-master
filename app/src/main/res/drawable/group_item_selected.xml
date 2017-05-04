@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--&lt;!&ndash; 点击时的背景图 &ndash;&gt;-->
+    <item android:state_pressed="true">
+        <color android:color="@color/groupSelect" />
+    </item>
+    <!-- 获取焦点时的背景图 -->
+    <item android:state_focused="true">
+        <color android:color="@color/groupSelect" />
+    </item>
+    <!-- 默认的背景图 -->
+    <item android:state_pressed="false">
+        <color android:color="#ffffff" />
+    </item>
+</selector>
