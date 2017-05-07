@@ -27,6 +27,7 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private OnGroupClickListener mOnGroupClickListener;
+    private View mSelectedView;
     public NotepadGroupAdapter(List<GroupInfo> groupInfoList, Context context) {
         this.mGroupInfoList = groupInfoList;
         this.mContext = context;
@@ -46,12 +47,13 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
         GroupInfo groupInfo = mGroupInfoList.get(position);
         int count = (int) SPUtils.get(mContext, SharePreEvent.GROUP_SELECTED,0);
         if (position == count){
-//            holder.rl_lrft_group.setfo
+            mSelectedView = holder.rl_lrft_group;
+            holder.rl_lrft_group.setBackgroundResource(R.color.groupSelect);
         }
         if(null != groupInfo) {
             holder.tv_group_name.setText(groupInfo.groupName);
             holder.tv_group_count.setText(String.valueOf(groupInfo.groupCount));
-            holder.rl_lrft_group.setTag(groupInfo);
+            holder.rl_lrft_group.setTag(position);
         }
     }
 
@@ -79,8 +81,14 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
                     if(null != mOnGroupClickListener){
                         notifyDataSetChanged();
                         Object obj = rl_lrft_group.getTag();
-                        GroupInfo groupInfo = null == obj ? null : (GroupInfo) obj;
-                        mOnGroupClickListener.onClick(groupInfo);
+                        int position = null == obj ? 0 : (int) obj;
+                        SPUtils.put(mContext, SharePreEvent.GROUP_SELECTED,position);
+                        mOnGroupClickListener.onClick(mGroupInfoList.get(position));
+                        if(null != mSelectedView){
+                            mSelectedView.setBackgroundResource(R.color.groupNoSelect);
+                            rl_lrft_group.setBackgroundResource(R.color.groupSelect);
+                            mSelectedView = rl_lrft_group;
+                        }
                     }
                 }
             });

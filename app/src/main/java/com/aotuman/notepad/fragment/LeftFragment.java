@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aotuman.notepad.MainActivity;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.NotepadGroupAdapter;
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
@@ -79,7 +78,9 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
 
     @Override
     public void onClick(GroupInfo groupInfo) {
-        Toast.makeText(this.getActivity(),groupInfo.groupName,Toast.LENGTH_SHORT).show();
+        if(null != groupInfo) {
+            Toast.makeText(this.getActivity(), groupInfo.groupName, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

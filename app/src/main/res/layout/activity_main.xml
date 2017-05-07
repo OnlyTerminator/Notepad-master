@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/content_frame"
+    <fragment
+        android:id="@+id/main_fragment"
+        class="com.aotuman.notepad.fragment.MainFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="22222222222222" />
+        android:layout_height="match_parent" />
 
     <fragment
         android:id="@+id/left_frame"
