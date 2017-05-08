@@ -11,10 +11,8 @@ import android.widget.TextView;
 
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
-import com.aotuman.notepad.entry.GroupInfo;
-import com.aotuman.notepad.entry.NotepatContentInfo;
-import com.aotuman.notepad.utils.SPUtils;
-import com.aotuman.notepad.utils.SharePreEvent;
+import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
+import com.aotuman.notepad.entry.NotepadContentInfo;
 
 import java.util.List;
 
@@ -23,11 +21,12 @@ import java.util.List;
  */
 
 public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.MyViewHolder> {
-    private List<NotepatContentInfo> mContentInfoList;
+    private List<NotepadContentInfo> mContentInfoList;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private View mSelectedView;
-    public MainContentAdapter(List<NotepatContentInfo> contentInfoList, Context context) {
+    private OnNotepadClickListener mOnListener;
+    public MainContentAdapter(List<NotepadContentInfo> contentInfoList, Context context) {
         this.mContentInfoList = contentInfoList;
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
@@ -43,9 +42,10 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        NotepatContentInfo notepatContentInfo = mContentInfoList.get(position);
+        NotepadContentInfo notepatContentInfo = mContentInfoList.get(position);
         if(null != notepatContentInfo){
             holder.tv_content_title.setText(notepatContentInfo.content);
+            holder.rl_main_content.setTag(notepatContentInfo);
         }
 
     }
@@ -56,8 +56,8 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
     }
 
 
-    public void setOnGroupClickListener(OnGroupClickListener onGroupClickListener){
-//        this.mOnGroupClickListener = onGroupClickListener;
+    public void setOnNotepadClickListener(OnNotepadClickListener listener){
+        this.mOnListener = listener;
     }
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_content_title;
@@ -73,7 +73,11 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
             rl_main_content.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if(null != mOnListener){
+                        Object obj = rl_main_content.getTag();
+                        NotepadContentInfo info = null == obj ? null : (NotepadContentInfo) obj;
+                        mOnListener.onClick(info);
+                    }
                 }
             });
         }

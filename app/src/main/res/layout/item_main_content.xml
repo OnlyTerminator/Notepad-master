@@ -11,7 +11,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:paddingLeft="8dp"
-        android:background="@color/groupNoSelect">
+        android:background="@drawable/notepad_main_background">
     <ImageView
         android:id="@+id/iv_content_image"
         android:layout_width="80dp"
@@ -46,5 +46,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="#cccccc"/>
+        android:background="@color/mainBackground"/>
 </LinearLayout>

@@ -79,7 +79,6 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
                 @Override
                 public void onClick(View v) {
                     if(null != mOnGroupClickListener){
-                        notifyDataSetChanged();
                         Object obj = rl_lrft_group.getTag();
                         int position = null == obj ? 0 : (int) obj;
                         SPUtils.put(mContext, SharePreEvent.GROUP_SELECTED,position);
