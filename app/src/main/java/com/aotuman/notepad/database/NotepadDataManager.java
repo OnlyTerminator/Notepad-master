@@ -37,31 +37,31 @@ public class NotepadDataManager {
         db.close();
     }
 
-    public void updateNotepadTitle(String title,long time) {
-        String sql = "update notepadinfo set title = ?,time = ?";
+    public void updateNotepadTitle(int id,String title,long time) {
+        String sql = "update notepadinfo set title = ?,time = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{title,String.valueOf(time)});
+        db.execSQL(sql, new Object[]{title,String.valueOf(time),id});
         db.close();
     }
 
-    public void updateNotepadContent(String content,long time) {
-        String sql = "update notepadinfo set content = ?,time = ?";
+    public void updateNotepadContent(int id,String content,long time) {
+        String sql = "update notepadinfo set content = ?,time = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{content,String.valueOf(time)});
+        db.execSQL(sql, new Object[]{content,String.valueOf(time),id});
         db.close();
     }
 
-    public void updateNotepadTitleAndContent(String title,String content,long time) {
-        String sql = "update notepadinfo set title = ?,content = ?,time = ?";
+    public void updateNotepadTitleAndContent(int id,String title,String content,long time) {
+        String sql = "update notepadinfo set title = ?,content = ?,time = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{title,content,String.valueOf(time)});
+        db.execSQL(sql, new Object[]{title,content,String.valueOf(time),id});
         db.close();
     }
 
-    public void deleteNotepadInfo(NotepadContentInfo info) {
-        String sql = "delete from notepadinfo where content = ?";
+    public void deleteNotepadInfo(int id) {
+        String sql = "delete from notepadinfo where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{info.content});
+        db.execSQL(sql, new Object[]{id});
         db.close();
     }
 
@@ -74,6 +74,7 @@ public class NotepadDataManager {
         if(null != cursor) {
             while (cursor.moveToNext()) {
                 NotepadContentInfo notepadContentInfo = new NotepadContentInfo();
+                notepadContentInfo.id = cursor.getInt(0);
                 notepadContentInfo.title = cursor.getString(1);
                 notepadContentInfo.content = cursor.getString(2);
                 notepadContentInfo.group = cursor.getString(3);

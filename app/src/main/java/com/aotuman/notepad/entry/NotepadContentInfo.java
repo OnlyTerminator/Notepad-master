@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class NotepadContentInfo implements Serializable {
     private static final long serialVersionUID = 0;
 
+    public int id;
     public String title;
     public String content;
     public String time;

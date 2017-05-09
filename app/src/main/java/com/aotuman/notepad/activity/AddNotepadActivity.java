@@ -87,16 +87,16 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
         String content = mEditContent.getText().toString();
         if(null != mNotepad) {
             if(TextUtils.isEmpty(title) && TextUtils.isEmpty(content)){
-                NotepadDataManager.getInstance(this).deleteNotepadInfo(mNotepad);
+                NotepadDataManager.getInstance(this).deleteNotepadInfo(mNotepad.id);
             }
             if((TextUtils.isEmpty(mNotepad.title) && !TextUtils.isEmpty(title)) || !mNotepad.title.equals(title)){
                 if((TextUtils.isEmpty(mNotepad.content) && !TextUtils.isEmpty(content)) || !mNotepad.content.equals(content)){
-                    NotepadDataManager.getInstance(this).updateNotepadTitleAndContent(title,content,currentTime);
+                    NotepadDataManager.getInstance(this).updateNotepadTitleAndContent(mNotepad.id,title,content,currentTime);
                 }else {
-                    NotepadDataManager.getInstance(this).updateNotepadTitle(title, currentTime);
+                    NotepadDataManager.getInstance(this).updateNotepadTitle(mNotepad.id,title, currentTime);
                 }
             }else if((TextUtils.isEmpty(mNotepad.content) && !TextUtils.isEmpty(content)) || !mNotepad.content.equals(content)){
-                NotepadDataManager.getInstance(this).updateNotepadContent(content,currentTime);
+                NotepadDataManager.getInstance(this).updateNotepadContent(mNotepad.id,content,currentTime);
             }
 
         }else {
