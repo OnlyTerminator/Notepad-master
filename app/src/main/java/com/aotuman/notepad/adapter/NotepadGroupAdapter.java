@@ -45,7 +45,7 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         GroupInfo groupInfo = mGroupInfoList.get(position);
-        int count = (int) SPUtils.get(mContext, SharePreEvent.GROUP_SELECTED,0);
+        int count = (int) SPUtils.get(SharePreEvent.GROUP_SELECTED_POSITION,0);
         if (position == count){
             mSelectedView = holder.rl_lrft_group;
             holder.rl_lrft_group.setBackgroundResource(R.color.groupSelect);
@@ -81,8 +81,10 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
                     if(null != mOnGroupClickListener){
                         Object obj = rl_lrft_group.getTag();
                         int position = null == obj ? 0 : (int) obj;
-                        SPUtils.put(mContext, SharePreEvent.GROUP_SELECTED,position);
-                        mOnGroupClickListener.onClick(mGroupInfoList.get(position));
+                        GroupInfo groupInfo = mGroupInfoList.get(position);
+                        SPUtils.put(SharePreEvent.GROUP_SELECTED_POSITION,position);
+                        SPUtils.put(SharePreEvent.GROUP_SELECTED_NAME,groupInfo.groupName);
+                        mOnGroupClickListener.onClick(groupInfo);
                         if(null != mSelectedView){
                             mSelectedView.setBackgroundResource(R.color.groupNoSelect);
                             rl_lrft_group.setBackgroundResource(R.color.groupSelect);

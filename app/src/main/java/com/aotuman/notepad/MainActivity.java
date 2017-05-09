@@ -2,6 +2,7 @@ package com.aotuman.notepad;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import com.aotuman.notepad.define.IMainView;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.fragment.LeftFragment;
+import com.aotuman.notepad.fragment.MainFragment;
 import com.aotuman.notepad.imp.MainPresenter;
 
 import java.util.List;
@@ -20,7 +22,8 @@ import java.util.List;
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private LeftFragment mLeftFragment;
+//    private LeftFragment mLeftFragment;
+    private MainFragment mMainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class MainActivity extends Activity {
     }
 
     private void initView() {
+        mMainFragment = (MainFragment) this.getFragmentManager().findFragmentById(R.id.main_fragment);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -65,5 +69,10 @@ public class MainActivity extends Activity {
         }
         //处理其他菜单点击事件
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mMainFragment.onActivityResult(requestCode,resultCode,data);
     }
 }

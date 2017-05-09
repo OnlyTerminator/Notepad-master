@@ -11,6 +11,9 @@ public class GroupInfo implements Serializable {
 
     public String groupName;
     public int groupCount;
+
+    public GroupInfo(){}
+
     public GroupInfo(String name,int count){
         groupName = name;
         groupCount = count;

@@ -22,6 +22,7 @@ import com.gc.materialdesign.views.ButtonFloat;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -61,20 +62,10 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
     }
 
     private void initData(){
-//        String str = "";
-//        String title = "";
-//        for (int i = 0; i < 10; i++){
-//            if(i%2 == 0){
-//                str = "都是第三方第三方水电费水电费水电费水电费水电费水电费第三方士大夫的说法都是发送到发送到发送到发送到发送到发送到";
-//                title = "";
-//            }else {
-//                str = "东方闪电撒大所大所大所大所";
-//                title = "dsdasdasds";
-//            }
-//            NotepadContentInfo notepatContentInfo = new NotepadContentInfo(title,str);
-//            mNotepadList.add(notepatContentInfo);
-//        }
-        mNotepadList.addAll(NotepadDataManager.getInstance(MainFragment.this.getActivity()).findAllNotepad());
+        mNotepadList.clear();
+        List<NotepadContentInfo> list = NotepadDataManager.getInstance(MainFragment.this.getActivity()).findAllNotepad();
+        Collections.reverse(list); // 倒序排列
+        mNotepadList.addAll(list);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -85,13 +76,20 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
         bundle.putSerializable("notepad", info);
         intent.putExtra("type","content");
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent,0);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_add){
-            startActivity(new Intent(this.getActivity(), AddNotepadActivity.class));
+            startActivityForResult(new Intent(this.getActivity(), AddNotepadActivity.class),0);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 1){
+            initData();
         }
     }
 }

@@ -14,6 +14,8 @@ import com.aotuman.notepad.database.NotepadDataManager;
 import com.aotuman.notepad.entry.NotepadContentInfo;
 import com.aotuman.notepad.imp.AddNotepadPresenter;
 import com.aotuman.notepad.define.IAddNotepadView;
+import com.aotuman.notepad.utils.SPUtils;
+import com.aotuman.notepad.utils.SharePreEvent;
 import com.aotuman.notepad.utils.TimeUtils;
 
 
@@ -77,26 +79,31 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
             mTextTime.setText(TimeUtils.timeStampToHour(Long.parseLong(time)));
         }else {
             mTextTime.setText(TimeUtils.timeStampToHour(currentTime));
+            mTextGroup.setText((String) SPUtils.get(SharePreEvent.GROUP_SELECTED_NAME,"全部"));
         }
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onBackPressed(){
+        Log.i(TAG, "onBackPressed");
         String title = mEditTitle.getText().toString();
         String content = mEditContent.getText().toString();
         if(null != mNotepad) {
             if(TextUtils.isEmpty(title) && TextUtils.isEmpty(content)){
                 NotepadDataManager.getInstance(this).deleteNotepadInfo(mNotepad.id);
-            }
-            if((TextUtils.isEmpty(mNotepad.title) && !TextUtils.isEmpty(title)) || !mNotepad.title.equals(title)){
-                if((TextUtils.isEmpty(mNotepad.content) && !TextUtils.isEmpty(content)) || !mNotepad.content.equals(content)){
-                    NotepadDataManager.getInstance(this).updateNotepadTitleAndContent(mNotepad.id,title,content,currentTime);
-                }else {
-                    NotepadDataManager.getInstance(this).updateNotepadTitle(mNotepad.id,title, currentTime);
+                setResult(1);
+            }else {
+                if ((TextUtils.isEmpty(mNotepad.title) && !TextUtils.isEmpty(title)) || !mNotepad.title.equals(title)) {
+                    if ((TextUtils.isEmpty(mNotepad.content) && !TextUtils.isEmpty(content)) || !mNotepad.content.equals(content)) {
+                        NotepadDataManager.getInstance(this).updateNotepadTitleAndContent(mNotepad.id, title, content, currentTime);
+                    } else {
+                        NotepadDataManager.getInstance(this).updateNotepadTitle(mNotepad.id, title, currentTime);
+                    }
+                    setResult(1);
+                } else if ((TextUtils.isEmpty(mNotepad.content) && !TextUtils.isEmpty(content)) || !mNotepad.content.equals(content)) {
+                    NotepadDataManager.getInstance(this).updateNotepadContent(mNotepad.id, content, currentTime);
+                    setResult(1);
                 }
-            }else if((TextUtils.isEmpty(mNotepad.content) && !TextUtils.isEmpty(content)) || !mNotepad.content.equals(content)){
-                NotepadDataManager.getInstance(this).updateNotepadContent(mNotepad.id,content,currentTime);
             }
 
         }else {
@@ -109,12 +116,9 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
                 mNotepad.group = mTextGroup.getText().toString();
                 mNotepad.time = String.valueOf(currentTime);
                 NotepadDataManager.getInstance(this).insertNotepadInfo(mNotepad);
+                setResult(1);
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+        super.onBackPressed();
     }
 }
