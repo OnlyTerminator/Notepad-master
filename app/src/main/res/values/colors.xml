@@ -7,4 +7,5 @@
     <color name="groupNoSelect">#ffffff</color>
     <color name="mainBackground">#F2F2F2</color>
     <color name="mainContent">#FFFFFF</color>
+    <color name="addNotepadBack">#FAFAFA</color>
 </resources>

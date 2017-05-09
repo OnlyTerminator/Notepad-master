@@ -1,5 +1,7 @@
 package com.aotuman.notepad.define;
 
-public interface IAddNotepadPresenter {
+import android.content.Intent;
 
+public interface IAddNotepadPresenter {
+    void initData(Intent intent);
 }

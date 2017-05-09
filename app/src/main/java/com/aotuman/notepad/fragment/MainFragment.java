@@ -73,6 +73,12 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
 
     @Override
     public void onClick(NotepadContentInfo info) {
+        Intent intent = new Intent(MainFragment.this.getActivity(),AddNotepadActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("notepad", info);
+        intent.putExtra("type","content");
+        intent.putExtras(bundle);
+        startActivity(intent);
         Toast.makeText(this.getActivity(),info.content,Toast.LENGTH_SHORT).show();
     }
 

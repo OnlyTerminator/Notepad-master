@@ -1,7 +1,11 @@
 package com.aotuman.notepad.imp;
 
+import android.content.Intent;
+import android.text.TextUtils;
+
 import com.aotuman.notepad.define.IAddNotepadPresenter;
 import com.aotuman.notepad.define.IAddNotepadView;
+import com.aotuman.notepad.entry.NotepadContentInfo;
 
 public class AddNotepadPresenter implements IAddNotepadPresenter {
 
@@ -11,5 +15,18 @@ public class AddNotepadPresenter implements IAddNotepadPresenter {
     public AddNotepadPresenter(IAddNotepadView mView) {
         this.mView = mView;
         mModel = new AddNotepadModel(this);
+    }
+
+    @Override
+    public void initData(Intent intent) {
+        if(null != intent){
+            String type = intent.getStringExtra("type");
+            if(!TextUtils.isEmpty(type)){
+                NotepadContentInfo info = (NotepadContentInfo) intent.getSerializableExtra("notepad");
+                mView.createAddNotepadView(info);
+                return;
+            }
+        }
+        mView.createAddNotepadView(null);
     }
 }
