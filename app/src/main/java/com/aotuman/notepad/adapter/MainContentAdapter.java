@@ -2,6 +2,7 @@ package com.aotuman.notepad.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,12 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         NotepadContentInfo notepatContentInfo = mContentInfoList.get(position);
         if(null != notepatContentInfo){
-            holder.tv_content_title.setText(notepatContentInfo.content);
+            String title = notepatContentInfo.title;
+            if(TextUtils.isEmpty(title)) {
+                holder.tv_content_title.setText(notepatContentInfo.content);
+            }else {
+                holder.tv_content_title.setText(title);
+            }
             holder.rl_main_content.setTag(notepatContentInfo);
         }
 

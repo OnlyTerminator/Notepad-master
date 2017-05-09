@@ -14,7 +14,8 @@ public class NotepadContentInfo implements Serializable{
     public String time;
     public String iconPath;
 
-    public NotepadContentInfo(String content){
+    public NotepadContentInfo(String title,String content){
         this.content = content;
+        this.title = title;
     }
 }

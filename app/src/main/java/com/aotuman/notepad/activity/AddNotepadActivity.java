@@ -49,6 +49,7 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
             String title = info.title;
 
             mEditContent.setText(content);
+            mEditTitle.setText(title);
         }
     }
 }
