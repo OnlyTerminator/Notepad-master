@@ -16,10 +16,13 @@ import com.aotuman.notepad.R;
 import com.aotuman.notepad.activity.AddNotepadActivity;
 import com.aotuman.notepad.adapter.MainContentAdapter;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
+import com.aotuman.notepad.database.NotepadDataManager;
 import com.aotuman.notepad.entry.NotepadContentInfo;
 import com.gc.materialdesign.views.ButtonFloat;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,19 +61,20 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
     }
 
     private void initData(){
-        String str = "";
-        String title = "";
-        for (int i = 0; i < 10; i++){
-            if(i%2 == 0){
-                str = "都是第三方第三方水电费水电费水电费水电费水电费水电费第三方士大夫的说法都是发送到发送到发送到发送到发送到发送到";
-                title = "";
-            }else {
-                str = "东方闪电撒大所大所大所大所";
-                title = "dsdasdasds";
-            }
-            NotepadContentInfo notepatContentInfo = new NotepadContentInfo(title,str);
-            mNotepadList.add(notepatContentInfo);
-        }
+//        String str = "";
+//        String title = "";
+//        for (int i = 0; i < 10; i++){
+//            if(i%2 == 0){
+//                str = "都是第三方第三方水电费水电费水电费水电费水电费水电费第三方士大夫的说法都是发送到发送到发送到发送到发送到发送到";
+//                title = "";
+//            }else {
+//                str = "东方闪电撒大所大所大所大所";
+//                title = "dsdasdasds";
+//            }
+//            NotepadContentInfo notepatContentInfo = new NotepadContentInfo(title,str);
+//            mNotepadList.add(notepatContentInfo);
+//        }
+        mNotepadList.addAll(NotepadDataManager.getInstance(MainFragment.this.getActivity()).findAllNotepad());
         mAdapter.notifyDataSetChanged();
     }
 

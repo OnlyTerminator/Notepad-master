@@ -73,7 +73,16 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
 
     @Override
     public void onClick(View v) {
-
+        int id = v.getId();
+        switch (id){
+            case R.id.tv_left_editor:
+                Toast.makeText(LeftFragment.this.getActivity(),"edit group info",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_left_name:
+            case R.id.iv_left_head:
+                Toast.makeText(LeftFragment.this.getActivity(),"edit persion info",Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     @Override

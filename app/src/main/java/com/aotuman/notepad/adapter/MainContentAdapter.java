@@ -14,7 +14,10 @@ import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
 import com.aotuman.notepad.entry.NotepadContentInfo;
+import com.aotuman.notepad.utils.TimeUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,6 +54,7 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
             }else {
                 holder.tv_content_title.setText(title);
             }
+            holder.tv_content_time.setText(TimeUtils.timeStampToDate(Long.parseLong(notepatContentInfo.time)));
             holder.rl_main_content.setTag(notepatContentInfo);
         }
 
@@ -65,6 +69,7 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
     public void setOnNotepadClickListener(OnNotepadClickListener listener){
         this.mOnListener = listener;
     }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_content_title;
         private TextView tv_content_time;
