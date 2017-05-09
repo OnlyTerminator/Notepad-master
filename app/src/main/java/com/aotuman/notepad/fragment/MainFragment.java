@@ -17,6 +17,7 @@ import com.aotuman.notepad.activity.AddNotepadActivity;
 import com.aotuman.notepad.adapter.MainContentAdapter;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
 import com.aotuman.notepad.entry.NotepadContentInfo;
+import com.gc.materialdesign.views.ButtonFloat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
 public class MainFragment extends Fragment implements OnNotepadClickListener,View.OnClickListener{
     private View mView;
     private RecyclerView mRecycleView;
-    private Button mButton;
+    private ButtonFloat mButton;
     private MainContentAdapter mAdapter;
     private List<NotepadContentInfo> mNotepadList = new ArrayList<>();
     @Override
@@ -44,7 +45,7 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
 
     private void initView(View view){
         mRecycleView = (RecyclerView) view.findViewById(R.id.rl_main);
-        mButton = (Button) view.findViewById(R.id.btn_add);
+        mButton = (ButtonFloat) view.findViewById(R.id.btn_add);
     }
 
     private void initEvent(){
