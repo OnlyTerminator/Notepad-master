@@ -16,6 +16,9 @@ import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.utils.SPUtils;
 import com.aotuman.notepad.utils.SharePreEvent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -83,7 +86,14 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
                         int position = null == obj ? 0 : (int) obj;
                         GroupInfo groupInfo = mGroupInfoList.get(position);
                         SPUtils.put(SharePreEvent.GROUP_SELECTED_POSITION,position);
-                        SPUtils.put(SharePreEvent.GROUP_SELECTED_NAME,groupInfo.groupName);
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("groupName",groupInfo.groupName);
+                            jsonObject.put("groupCount",groupInfo.groupCount);
+                            SPUtils.put(SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         mOnGroupClickListener.onClick(groupInfo);
                         if(null != mSelectedView){
                             mSelectedView.setBackgroundResource(R.color.groupNoSelect);

@@ -8,15 +8,21 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.aotuman.notepad.ATMApplication;
 import com.aotuman.notepad.R;
+import com.aotuman.notepad.database.NoteGroupDataManager;
 import com.aotuman.notepad.database.NotepadDataBaseHelp;
 import com.aotuman.notepad.database.NotepadDataManager;
+import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.entry.NotepadContentInfo;
 import com.aotuman.notepad.imp.AddNotepadPresenter;
 import com.aotuman.notepad.define.IAddNotepadView;
 import com.aotuman.notepad.utils.SPUtils;
 import com.aotuman.notepad.utils.SharePreEvent;
 import com.aotuman.notepad.utils.TimeUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class AddNotepadActivity extends Activity implements IAddNotepadView {
@@ -27,7 +33,9 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
     private TextView mTextGroup;
     private TextView mTextTime;
     private NotepadContentInfo mNotepad;
+    private GroupInfo mGroupInfo = new GroupInfo();
     private long currentTime = System.currentTimeMillis();
+    private NotepadDataManager mNotepadDataManager;
     public AddNotepadActivity() {
         mPresenter = new AddNotepadPresenter(this);
     }
@@ -58,6 +66,15 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
     }
 
     private void initData(){
+        mNotepadDataManager = NotepadDataManager.getInstance(ATMApplication.getInstance());
+        String group = (String) SPUtils.get(SharePreEvent.GROUP_SELECTED_INFO,"");
+        try {
+            JSONObject jsonObject = new JSONObject(group);
+            mGroupInfo.groupName = jsonObject.getString("groupName");
+            mGroupInfo.groupCount = jsonObject.getInt("groupCount");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         mPresenter.initData(getIntent());
     }
 
@@ -79,7 +96,7 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
             mTextTime.setText(TimeUtils.timeStampToHour(Long.parseLong(time)));
         }else {
             mTextTime.setText(TimeUtils.timeStampToHour(currentTime));
-            mTextGroup.setText((String) SPUtils.get(SharePreEvent.GROUP_SELECTED_NAME,"全部"));
+            mTextGroup.setText(mGroupInfo.groupName);
         }
     }
 
@@ -90,18 +107,18 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
         String content = mEditContent.getText().toString();
         if(null != mNotepad) {
             if(TextUtils.isEmpty(title) && TextUtils.isEmpty(content)){
-                NotepadDataManager.getInstance(this).deleteNotepadInfo(mNotepad.id);
+                mNotepadDataManager.deleteNotepadInfo(mNotepad.id);
                 setResult(1);
             }else {
                 if ((TextUtils.isEmpty(mNotepad.title) && !TextUtils.isEmpty(title)) || !mNotepad.title.equals(title)) {
                     if ((TextUtils.isEmpty(mNotepad.content) && !TextUtils.isEmpty(content)) || !mNotepad.content.equals(content)) {
-                        NotepadDataManager.getInstance(this).updateNotepadTitleAndContent(mNotepad.id, title, content, currentTime);
+                        mNotepadDataManager.updateNotepadTitleAndContent(mNotepad.id, title, content, currentTime);
                     } else {
-                        NotepadDataManager.getInstance(this).updateNotepadTitle(mNotepad.id, title, currentTime);
+                        mNotepadDataManager.updateNotepadTitle(mNotepad.id, title, currentTime);
                     }
                     setResult(1);
                 } else if ((TextUtils.isEmpty(mNotepad.content) && !TextUtils.isEmpty(content)) || !mNotepad.content.equals(content)) {
-                    NotepadDataManager.getInstance(this).updateNotepadContent(mNotepad.id, content, currentTime);
+                    mNotepadDataManager.updateNotepadContent(mNotepad.id, content, currentTime);
                     setResult(1);
                 }
             }
@@ -115,7 +132,8 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
                 mNotepad.content = mEditContent.getText().toString();
                 mNotepad.group = mTextGroup.getText().toString();
                 mNotepad.time = String.valueOf(currentTime);
-                NotepadDataManager.getInstance(this).insertNotepadInfo(mNotepad);
+                mNotepadDataManager.insertNotepadInfo(mNotepad);
+                NoteGroupDataManager.getInstance(ATMApplication.getInstance()).updateGroupInfo(mGroupInfo.groupName,++mGroupInfo.groupCount);
                 setResult(1);
             }
         }

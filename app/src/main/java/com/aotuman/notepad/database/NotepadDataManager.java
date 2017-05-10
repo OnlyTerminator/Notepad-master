@@ -16,10 +16,8 @@ import java.util.List;
 public class NotepadDataManager {
     private static NotepadDataBaseHelp mNotepadDataBaseHelp = null;
     private static NotepadDataManager instance;
-    private Context context;
 
     public NotepadDataManager(Context context) {
-        this.context = context;
         mNotepadDataBaseHelp = new NotepadDataBaseHelp(context);
     }
 

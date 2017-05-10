@@ -38,10 +38,21 @@ public class NoteGroupDataManager {
         db.close();
     }
 
+    public void initGroupInfos(List<GroupInfo> infos) {
+        if(null != infos && !infos.isEmpty()){
+            for (int i = 0; i < infos.size(); i++){
+                GroupInfo in = infos.get(i);
+                if(null != in) {
+                    insertGroupInfo(in);
+                }
+            }
+        }
+    }
+
     public void updateGroupInfo(String name,long count) {
-        String sql = "update groupinfo set name = ?,count = ?";
+        String sql = "update groupinfo set count = ? where name = ?";
         SQLiteDatabase db = mNoteGroupDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{name,count});
+        db.execSQL(sql, new Object[]{count,name});
         db.close();
     }
 

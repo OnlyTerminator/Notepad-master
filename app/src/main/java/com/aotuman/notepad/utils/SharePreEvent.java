@@ -6,7 +6,7 @@ package com.aotuman.notepad.utils;
 
 public enum SharePreEvent {
     GROUP_SELECTED_POSITION,
-    GROUP_SELECTED_NAME,
+    GROUP_SELECTED_INFO,
     IS_FIRST,
-    GROUP_INFO
+
 }

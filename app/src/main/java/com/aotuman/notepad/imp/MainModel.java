@@ -2,6 +2,8 @@ package com.aotuman.notepad.imp;
 
 import android.text.TextUtils;
 
+import com.aotuman.notepad.ATMApplication;
+import com.aotuman.notepad.database.NoteGroupDataManager;
 import com.aotuman.notepad.define.IMainModel;
 import com.aotuman.notepad.define.IMainPresenter;
 import com.aotuman.notepad.entry.GroupInfo;
@@ -26,27 +28,16 @@ public class MainModel implements IMainModel {
     @Override
     public void getLeftGroupData() {
         List<GroupInfo> list = new ArrayList<>();
-        String group = (String) SPUtils.get(SharePreEvent.GROUP_INFO,"");
-        if(TextUtils.isEmpty(group)) {
+        NoteGroupDataManager manager = NoteGroupDataManager.getInstance(ATMApplication.getInstance());
+        List<GroupInfo> groupInfos = manager.findAllNotepad();
+        if(null == groupInfos || groupInfos.isEmpty()) {
             list.add(new GroupInfo("全部",0));
             list.add(new GroupInfo("未分组",0));
             list.add(new GroupInfo("生活",0));
             list.add(new GroupInfo("工作",0));
-            listToJson(list);
+            manager.initGroupInfos(list);
         }else {
-            try {
-                JSONArray jsonArray = new JSONArray(group);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    GroupInfo info = new GroupInfo();
-                    JSONObject temp = (JSONObject) jsonArray.get(i);
-                    info.groupName = temp.getString("groupName");
-                    info.groupCount = temp.getInt("groupCount");
-                    list.add(info);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            list.addAll(groupInfos);
         }
         presenter.updateGroupView(list);
     }
@@ -62,24 +53,4 @@ public class MainModel implements IMainModel {
         presenter.updatePersonalIcon("");
     }
 
-    private void listToJson(List<GroupInfo> list) {
-        try {
-            JSONArray jsonArray = new JSONArray();
-            JSONObject jsonObject = new JSONObject();
-            JSONObject tmpObj = null;
-            int count = list.size();
-            for (int i = 0; i < count; i++) {
-                tmpObj = new JSONObject();
-                tmpObj.put("groupName", list.get(i).groupName);
-                tmpObj.put("groupCount", list.get(i).groupCount);
-                jsonArray.put(tmpObj);
-                tmpObj = null;
-            }
-            String personInfos = jsonArray.toString(); // 将JSONArray转换得到String
-//            jsonObject.put("groupinfos", personInfos);   // 获得JSONObject的String
-            SPUtils.put(SharePreEvent.GROUP_INFO,personInfos);
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 }
