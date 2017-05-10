@@ -31,7 +31,7 @@ public class MainModel implements IMainModel {
         NoteGroupDataManager manager = NoteGroupDataManager.getInstance(ATMApplication.getInstance());
         List<GroupInfo> groupInfos = manager.findAllNotepad();
         if(null == groupInfos || groupInfos.isEmpty()) {
-            list.add(new GroupInfo("全部",0));
+//            list.add(new GroupInfo("全部",0));
             list.add(new GroupInfo("未分组",0));
             list.add(new GroupInfo("生活",0));
             list.add(new GroupInfo("工作",0));

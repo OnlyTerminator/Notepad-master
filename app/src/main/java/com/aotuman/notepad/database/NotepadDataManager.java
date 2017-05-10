@@ -35,24 +35,24 @@ public class NotepadDataManager {
         db.close();
     }
 
-    public void updateNotepadTitle(int id,String title,long time) {
+    public void updateNotepadTitle(int id, String title, long time) {
         String sql = "update notepadinfo set title = ?,time = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{title,String.valueOf(time),id});
+        db.execSQL(sql, new Object[]{title, String.valueOf(time), id});
         db.close();
     }
 
-    public void updateNotepadContent(int id,String content,long time) {
+    public void updateNotepadContent(int id, String content, long time) {
         String sql = "update notepadinfo set content = ?,time = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{content,String.valueOf(time),id});
+        db.execSQL(sql, new Object[]{content, String.valueOf(time), id});
         db.close();
     }
 
-    public void updateNotepadTitleAndContent(int id,String title,String content,long time) {
+    public void updateNotepadTitleAndContent(int id, String title, String content, long time) {
         String sql = "update notepadinfo set title = ?,content = ?,time = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{title,content,String.valueOf(time),id});
+        db.execSQL(sql, new Object[]{title, content, String.valueOf(time), id});
         db.close();
     }
 
@@ -69,7 +69,7 @@ public class NotepadDataManager {
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         Cursor cursor;
         cursor = db.rawQuery(sql, new String[]{});
-        if(null != cursor) {
+        if (null != cursor) {
             while (cursor.moveToNext()) {
                 NotepadContentInfo notepadContentInfo = new NotepadContentInfo();
                 notepadContentInfo.id = cursor.getInt(0);
@@ -83,5 +83,27 @@ public class NotepadDataManager {
         }
         db.close();
         return notepadContentInfos;
-}
+    }
+
+    public List<NotepadContentInfo> findNotepadByGroup(String groupName) {
+        List<NotepadContentInfo> notepadContentInfos = new ArrayList<>();
+        String sql = "select * from notepadinfo where notegroup = ?";
+        SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
+        Cursor cursor;
+        cursor = db.rawQuery(sql, new String[]{groupName});
+        if (null != cursor) {
+            while (cursor.moveToNext()) {
+                NotepadContentInfo notepadContentInfo = new NotepadContentInfo();
+                notepadContentInfo.id = cursor.getInt(0);
+                notepadContentInfo.title = cursor.getString(1);
+                notepadContentInfo.content = cursor.getString(2);
+                notepadContentInfo.group = cursor.getString(3);
+                notepadContentInfo.time = cursor.getString(4);
+                notepadContentInfos.add(notepadContentInfo);
+            }
+            cursor.close();
+        }
+        db.close();
+        return notepadContentInfos;
+    }
 }

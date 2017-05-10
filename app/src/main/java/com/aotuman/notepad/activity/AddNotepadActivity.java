@@ -134,6 +134,15 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
                 mNotepad.time = String.valueOf(currentTime);
                 mNotepadDataManager.insertNotepadInfo(mNotepad);
                 NoteGroupDataManager.getInstance(ATMApplication.getInstance()).updateGroupInfo(mGroupInfo.groupName,++mGroupInfo.groupCount);
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("groupName",mGroupInfo.groupName);
+                    jsonObject.put("groupCount",mGroupInfo.groupCount);
+                    SPUtils.put(SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 setResult(1);
             }
         }

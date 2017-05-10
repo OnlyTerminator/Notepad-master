@@ -19,6 +19,7 @@ import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
 import com.aotuman.notepad.define.IMainView;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.imp.MainPresenter;
+import com.aotuman.notepad.utils.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
     private NotepadGroupAdapter mAdapter;
     private List<GroupInfo> mGroupInfoList = new ArrayList<>();
     private MainPresenter mMainPresenter;
+    private OnGroupClickListener mOnGroupClickListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (null == mView) {
@@ -67,7 +69,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
         mRecycleView.setAdapter(mAdapter);
     }
 
-    private void initData(){
+    public void initData(){
         mMainPresenter.getLeftData();
     }
 
@@ -88,7 +90,11 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
     @Override
     public void onClick(GroupInfo groupInfo) {
         if(null != groupInfo) {
-            Toast.makeText(this.getActivity(), groupInfo.groupName, Toast.LENGTH_SHORT).show();
+            if(null != mOnGroupClickListener){
+                mOnGroupClickListener.onClick(groupInfo);
+            }
+//            Toast.makeText(this.getActivity(), groupInfo.groupName, Toast.LENGTH_SHORT).show();
+//            EventBus.create().sendEvent(EventBus.EventType.CHANGEGROUP,"登录成功");
         }
     }
 
@@ -109,4 +115,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
         Log.i(TAG, "updatePersonalIcon: ");
     }
 
+    public void setCityOnClickListion(OnGroupClickListener callBack){
+        mOnGroupClickListener = callBack;
+    }
 }
