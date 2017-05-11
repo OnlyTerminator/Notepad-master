@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity implements OnGroupClickListe
     private ActionBarDrawerToggle mDrawerToggle;
     private LeftFragment mLeftFragment;
     private MainFragment mMainFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,17 +52,13 @@ public class MainActivity extends AppCompatActivity implements OnGroupClickListe
     }
 
     private void intitActionBar() {
-//        ActionBar actionBar = getActionBar();
-//        actionBar.setHomeButtonEnabled(true);
-//        actionBar.setTitle(R.string.actionbar_title);
-//        actionBar.setIcon(R.mipmap.ic_launcher_round);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setTitle("便签");
-        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        mActionBar.setTitle("便签");
+        mActionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

@@ -19,7 +19,8 @@
         </activity>
         <activity
             android:name=".activity.AddNotepadActivity"
-            android:windowSoftInputMode= "stateVisible" />
+            android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".activity.activity.EditGroupActivity"></activity>
     </application>
 
 </manifest>

@@ -65,7 +65,7 @@ public class NotepadDataManager {
 
     public List<NotepadContentInfo> findAllNotepad() {
         List<NotepadContentInfo> notepadContentInfos = new ArrayList<>();
-        String sql = "select * from notepadinfo";
+        String sql = "select * from notepadinfo order by time desc";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         Cursor cursor;
         cursor = db.rawQuery(sql, new String[]{});
@@ -87,7 +87,7 @@ public class NotepadDataManager {
 
     public List<NotepadContentInfo> findNotepadByGroup(String groupName) {
         List<NotepadContentInfo> notepadContentInfos = new ArrayList<>();
-        String sql = "select * from notepadinfo where notegroup = ?";
+        String sql = "select * from notepadinfo where notegroup = ?  order by time desc";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         Cursor cursor;
         cursor = db.rawQuery(sql, new String[]{groupName});

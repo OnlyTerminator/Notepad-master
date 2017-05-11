@@ -1,7 +1,9 @@
 package com.aotuman.notepad.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,12 +13,11 @@ import android.widget.TextView;
 import com.aotuman.notepad.ATMApplication;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.database.NoteGroupDataManager;
-import com.aotuman.notepad.database.NotepadDataBaseHelp;
 import com.aotuman.notepad.database.NotepadDataManager;
+import com.aotuman.notepad.define.IAddNotepadView;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.entry.NotepadContentInfo;
 import com.aotuman.notepad.imp.AddNotepadPresenter;
-import com.aotuman.notepad.define.IAddNotepadView;
 import com.aotuman.notepad.utils.SPUtils;
 import com.aotuman.notepad.utils.SharePreEvent;
 import com.aotuman.notepad.utils.TimeUtils;
@@ -25,7 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class AddNotepadActivity extends Activity implements IAddNotepadView {
+public class AddNotepadActivity extends AppCompatActivity implements IAddNotepadView {
     private static final String TAG = "AddNotepadActivity";
     private AddNotepadPresenter mPresenter;
     private EditText mEditTitle;
@@ -44,6 +45,7 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_notepad);
+        intitActionBar();
         initView();
         initEvent();
         initData();
@@ -63,6 +65,16 @@ public class AddNotepadActivity extends Activity implements IAddNotepadView {
                 return (event.getKeyCode()== KeyEvent.KEYCODE_ENTER);
             }
         });
+    }
+
+    private void intitActionBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        mActionBar.setTitle("编辑");
+        mActionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void initData(){

@@ -87,7 +87,7 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
             }
         }
         List<NotepadContentInfo> list = NotepadDataManager.getInstance(MainFragment.this.getActivity()).findNotepadByGroup(info.groupName);
-        Collections.reverse(list); // 倒序排列
+//        Collections.reverse(list); // 倒序排列
         mNotepadList.addAll(list);
         mAdapter.notifyDataSetChanged();
     }
