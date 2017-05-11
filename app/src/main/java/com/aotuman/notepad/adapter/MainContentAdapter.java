@@ -3,6 +3,7 @@ package com.aotuman.notepad.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +31,21 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
     private LayoutInflater mLayoutInflater;
     private View mSelectedView;
     private OnNotepadClickListener mOnListener;
+    private int mBackground;
     public MainContentAdapter(List<NotepadContentInfo> contentInfoList, Context context) {
         this.mContentInfoList = contentInfoList;
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.selectableItemBackground, typedValue, true);
+        this.mBackground = typedValue.resourceId;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         MyViewHolder myViewHolder = null;
         View view = mLayoutInflater.inflate(R.layout.item_main_content, parent, false);
+        view.setBackgroundResource(mBackground);
         myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }
@@ -81,6 +87,7 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
             tv_content_time = (TextView) itemView.findViewById(R.id.tv_content_time);
             rl_main_content = (RelativeLayout) itemView.findViewById(R.id.rl_main_content);
             iv_content_icon = (ImageView) itemView.findViewById(R.id.iv_content_image);
+            rl_main_content.setBackgroundResource(mBackground);
             rl_main_content.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

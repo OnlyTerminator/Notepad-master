@@ -1,27 +1,21 @@
 package com.aotuman.notepad;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
-import com.aotuman.notepad.define.IMainView;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.fragment.LeftFragment;
 import com.aotuman.notepad.fragment.MainFragment;
-import com.aotuman.notepad.imp.MainPresenter;
-import com.aotuman.notepad.utils.EventBus;
 
-import java.util.List;
-
-public class MainActivity extends Activity implements OnGroupClickListener{
+public class MainActivity extends AppCompatActivity implements OnGroupClickListener{
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LeftFragment mLeftFragment;
@@ -59,10 +53,17 @@ public class MainActivity extends Activity implements OnGroupClickListener{
     }
 
     private void intitActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle(R.string.actionbar_title);
-        actionBar.setIcon(R.mipmap.ic_launcher_round);
+//        ActionBar actionBar = getActionBar();
+//        actionBar.setHomeButtonEnabled(true);
+//        actionBar.setTitle(R.string.actionbar_title);
+//        actionBar.setIcon(R.mipmap.ic_launcher_round);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar ab = getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setTitle("便签");
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.aotuman.notepad.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +11,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.activity.AddNotepadActivity;
@@ -20,18 +19,14 @@ import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
 import com.aotuman.notepad.database.NotepadDataManager;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.entry.NotepadContentInfo;
-import com.aotuman.notepad.utils.EventBus;
 import com.aotuman.notepad.utils.SPUtils;
 import com.aotuman.notepad.utils.SharePreEvent;
-import com.gc.materialdesign.views.ButtonFloat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +36,7 @@ import java.util.List;
 public class MainFragment extends Fragment implements OnNotepadClickListener,View.OnClickListener{
     private View mView;
     private RecyclerView mRecycleView;
-    private ButtonFloat mButton;
+    private FloatingActionButton mButton;
     private MainContentAdapter mAdapter;
     private List<NotepadContentInfo> mNotepadList = new ArrayList<>();
     @Override
@@ -57,7 +52,7 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
 
     private void initView(View view){
         mRecycleView = (RecyclerView) view.findViewById(R.id.rl_main);
-        mButton = (ButtonFloat) view.findViewById(R.id.btn_add);
+        mButton = (FloatingActionButton) view.findViewById(R.id.btn_add);
     }
 
     private void initEvent(){
