@@ -20,7 +20,7 @@
         <activity
             android:name=".activity.AddNotepadActivity"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".activity.activity.EditGroupActivity"></activity>
+        <activity android:name=".activity.EditGroupActivity" />
     </application>
 
 </manifest>

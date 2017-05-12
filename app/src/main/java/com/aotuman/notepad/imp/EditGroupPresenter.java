@@ -13,4 +13,8 @@ public class EditGroupPresenter implements IEditGroupPresenter {
         this.mView = mView;
         mModel = new EditGroupModel(this);
     }
+
+    public void getGroupInfo(){
+        mView.updateGroupView(mModel.getGroupInfo());
+    }
 }

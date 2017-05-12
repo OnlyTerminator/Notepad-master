@@ -1,6 +1,7 @@
 package com.aotuman.notepad.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aotuman.notepad.R;
+import com.aotuman.notepad.activity.EditGroupActivity;
 import com.aotuman.notepad.adapter.NotepadGroupAdapter;
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
 import com.aotuman.notepad.define.IMainView;
@@ -79,6 +81,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
         switch (id){
             case R.id.tv_left_editor:
                 Toast.makeText(LeftFragment.this.getActivity(),"edit group info",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this.getActivity(), EditGroupActivity.class));
                 break;
             case R.id.tv_left_name:
             case R.id.iv_left_head:

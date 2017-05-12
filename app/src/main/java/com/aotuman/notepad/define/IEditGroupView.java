@@ -1,5 +1,9 @@
 package com.aotuman.notepad.define;
 
-public interface IEditGroupView {
+import com.aotuman.notepad.entry.GroupInfo;
 
+import java.util.List;
+
+public interface IEditGroupView {
+    void updateGroupView(List<GroupInfo> list);
 }
