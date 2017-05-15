@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_notepad);
-        intitActionBar();
+        initActionBar();
         initView();
         initEvent();
         initData();
@@ -67,13 +68,13 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
         });
     }
 
-    private void intitActionBar() {
+    private void initActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        mActionBar.setTitle("编辑");
+        mActionBar.setHomeAsUpIndicator(R.drawable.back);
+        mActionBar.setTitle("编辑便签");
         mActionBar.setDisplayHomeAsUpEnabled(true);
     }
 
@@ -88,6 +89,17 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
             e.printStackTrace();
         }
         mPresenter.initData(getIntent());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        //处理其他菜单点击事件
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

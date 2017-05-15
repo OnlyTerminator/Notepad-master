@@ -3,4 +3,8 @@
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
     <string name="actionbar_title">便签</string>
+    <string name="refactor_name">编辑</string>
+    <string name="delete_group">删除</string>
+    <string name="add_group">新建分组</string>
+    <string name="edit_group_title">编辑分组</string>
 </resources>

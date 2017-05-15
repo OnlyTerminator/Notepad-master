@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnGroupClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        intitActionBar();
+        initActionBar();
         initView();
     }
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnGroupClickListe
         mLeftFragment.setCityOnClickListion(this);
     }
 
-    private void intitActionBar() {
+    private void initActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements OnGroupClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-// The action bar home/up actionshould open or close the drawer.
-// ActionBarDrawerToggle will takecare of this.
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
