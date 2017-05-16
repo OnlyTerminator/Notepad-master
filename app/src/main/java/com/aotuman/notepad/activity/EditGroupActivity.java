@@ -28,6 +28,7 @@ import com.aotuman.notepad.database.NoteGroupDataManager;
 import com.aotuman.notepad.define.IEditGroupView;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.imp.EditGroupPresenter;
+import com.aotuman.notepad.view.GroupInfoDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,33 +118,48 @@ public class EditGroupActivity extends AppCompatActivity implements IEditGroupVi
     }
 
     private void showInputDialog(final String content) {
-        final EditText editText = new EditText(EditGroupActivity.this);
-        if(TextUtils.isEmpty(content)) {
-            editText.setHint("新建分组");
-        }else {
-            editText.setText(content);
-        }
-        AlertDialog.Builder inputDialog =
-                new AlertDialog.Builder(EditGroupActivity.this);
-        inputDialog.setTitle("分组").setView(editText);
-        inputDialog.setPositiveButton("确定",
-                new DialogInterface.OnClickListener() {
+        GroupInfoDialog.Builder builder = new GroupInfoDialog.Builder(EditGroupActivity.this);
+        builder.setContent(content)
+                .setPositiveButton(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String group = editText.getText().toString();
-                        if(TextUtils.isEmpty(content) && !TextUtils.isEmpty(group)){
-                            NoteGroupDataManager.getInstance(ATMApplication.getInstance()).insertGroupInfo(new GroupInfo(group,0));
-                            initData();
-                        }else if(!TextUtils.isEmpty(content)){
-                            if(TextUtils.isEmpty(group)){
-                                Toast.makeText(ATMApplication.getInstance(),"修改失败，分组名不可为空！",Toast.LENGTH_SHORT).show();
-                            }else if(!content.equals(group)){
-                                NoteGroupDataManager.getInstance(ATMApplication.getInstance()).updateGroupName(group,content);
-                                initData();
-                            }
-                        }
+
                     }
-                }).show();
+                })
+                .setNegativeButton(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).creat().show();
+//        final EditText editText = new EditText(EditGroupActivity.this);
+//        if(TextUtils.isEmpty(content)) {
+//            editText.setHint("新建分组");
+//        }else {
+//            editText.setText(content);
+//        }
+//        AlertDialog.Builder inputDialog = new AlertDialog.Builder(EditGroupActivity.this);
+//
+//        inputDialog.setTitle("分组")
+//                .setView(editText)
+//                .setIcon(R.mipmap.ic_launcher_round)
+//                .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String group = editText.getText().toString();
+//                        if(TextUtils.isEmpty(content) && !TextUtils.isEmpty(group)){
+//                            NoteGroupDataManager.getInstance(ATMApplication.getInstance()).insertGroupInfo(new GroupInfo(group,0));
+//                            initData();
+//                        }else if(!TextUtils.isEmpty(content)){
+//                            if(TextUtils.isEmpty(group)){
+//                                Toast.makeText(ATMApplication.getInstance(),"修改失败，分组名不可为空！",Toast.LENGTH_SHORT).show();
+//                            }else if(!content.equals(group)){
+//                                NoteGroupDataManager.getInstance(ATMApplication.getInstance()).updateGroupName(group,content);
+//                                initData();
+//                            }
+//                        }
+//                    }
+//                }).show();
     }
 
     private void showSnackbar(View view, final GroupInfo groupInfo){
