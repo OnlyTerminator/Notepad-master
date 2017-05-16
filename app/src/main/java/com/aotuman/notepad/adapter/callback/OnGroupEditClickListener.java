@@ -1,0 +1,13 @@
+package com.aotuman.notepad.adapter.callback;
+
+import android.view.View;
+
+import com.aotuman.notepad.entry.GroupInfo;
+
+/**
+ * Created by 凹凸曼 on 2017/5/4.
+ */
+
+public interface OnGroupEditClickListener {
+    void onClick(View view, GroupInfo groupInfo);
+}

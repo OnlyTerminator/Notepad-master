@@ -2,18 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_group_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/group_delete"/>
     <TextView
         android:id="@+id/tv_group_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_group_delete"
         android:text="分组"
         android:layout_marginLeft="15dp"/>
 
-    <RadioButton
-        android:id="@+id/rb_group_select"
+    <ImageView
+        android:id="@+id/iv_group_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"/>
+        android:src="@drawable/group_edit"/>
 </RelativeLayout>

@@ -56,6 +56,12 @@ public class NoteGroupDataManager {
         db.close();
     }
 
+    public void updateGroupName(String nowName,String lastName) {
+        String sql = "update groupinfo set name = ? where name = ?";
+        SQLiteDatabase db = mNoteGroupDataBaseHelp.getWritableDatabase();
+        db.execSQL(sql, new Object[]{nowName,lastName});
+        db.close();
+    }
     public void deleteNotepadInfo(String name) {
         String sql = "delete from groupinfo where name = ?";
         SQLiteDatabase db = mNoteGroupDataBaseHelp.getWritableDatabase();
