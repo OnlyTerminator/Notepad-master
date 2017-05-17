@@ -109,17 +109,4 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if(resultCode == 1){
-//            initData();
-//        }
-    }
-
-//    @Override
-//    public void onHandleEvent(int eventType, Object obj) {
-//        if(eventType == EventBus.EventType.CHANGEGROUP){
-//            initData();
-//        }
-//    }
 }

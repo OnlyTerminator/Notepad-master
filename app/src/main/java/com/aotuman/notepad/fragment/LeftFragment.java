@@ -80,8 +80,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
         int id = v.getId();
         switch (id){
             case R.id.tv_left_editor:
-                Toast.makeText(LeftFragment.this.getActivity(),"edit group info",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this.getActivity(), EditGroupActivity.class));
+                startActivityForResult(new Intent(this.getActivity(), EditGroupActivity.class),0);
                 break;
             case R.id.tv_left_name:
             case R.id.iv_left_head:
@@ -120,5 +119,12 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
 
     public void setCityOnClickListion(OnGroupClickListener callBack){
         mOnGroupClickListener = callBack;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 1){
+            initData();
+        }
     }
 }

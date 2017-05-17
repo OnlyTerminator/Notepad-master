@@ -3,15 +3,12 @@ package com.aotuman.notepad.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.aotuman.notepad.R;
 
@@ -37,8 +34,7 @@ public class GroupInfoDialog extends Dialog {
         private String mTitle;
         private String mContent;
         private View mContentView;
-        private OnClickListener positiveButtonClickListener;
-        private OnClickListener negativeButtonClickListener;
+        private PositiveOnClickListener positiveButtonClickListener;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -59,13 +55,8 @@ public class GroupInfoDialog extends Dialog {
             return this;
         }
 
-        public Builder setPositiveButton(OnClickListener listener) {
+        public Builder setPositiveButton(PositiveOnClickListener listener) {
             this.positiveButtonClickListener = listener;
-            return this;
-        }
-
-        public Builder setNegativeButton(OnClickListener listener) {
-            this.negativeButtonClickListener = listener;
             return this;
         }
 
@@ -77,7 +68,7 @@ public class GroupInfoDialog extends Dialog {
             View view = inflater.inflate(R.layout.group_edit_dialog, null);
             dialog.addContentView(view, new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            EditText editText = (EditText) view.findViewById(R.id.et_content);
+            final EditText editText = (EditText) view.findViewById(R.id.et_content);
             Button button = (Button) view.findViewById(R.id.btn_sure);
             if (!TextUtils.isEmpty(mTitle)) {
             }
@@ -85,18 +76,10 @@ public class GroupInfoDialog extends Dialog {
                 editText.setText(mContent);
             }
 
-//            iv_close.setOnClickListener(new View.OnClickListener() {
-//                public void onClick(View v) {
-//                    negativeButtonClickListener.onClick(dialog,
-//                            DialogInterface.BUTTON_NEGATIVE);
-//                    dialog.dismiss();
-//                }
-//            });
-
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    positiveButtonClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                    positiveButtonClickListener.onClick(editText.getText().toString().trim());
                     dialog.dismiss();
                 }
             });
@@ -106,10 +89,11 @@ public class GroupInfoDialog extends Dialog {
                 public void onDismiss(DialogInterface dialog) {
                 }
             });
-
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
             return dialog;
         }
+    }
+
+    public interface PositiveOnClickListener {
+        void onClick(String content);
     }
 }

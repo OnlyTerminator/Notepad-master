@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#4294EA</color>
+    <color name="colorPrimaryDark">#4294EA</color>
+    <color name="colorAccent">#4294EA</color>
     <color name="groupSelect">#F2F2F2</color>
     <color name="groupNoSelect">#ffffff</color>
     <color name="mainBackground">#F2F2F2</color>
     <color name="mainContent">#FFFFFF</color>
     <color name="addNotepadBack">#FAFAFA</color>
+    <color name="editGroupDialog">#4294EA</color>
 </resources>

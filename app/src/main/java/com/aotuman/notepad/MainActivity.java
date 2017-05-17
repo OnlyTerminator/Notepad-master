@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnGroupClickListe
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
-                R.mipmap.ic_launcher_round,  /* nav drawer image to replace 'Up' caret */
+                R.mipmap.icon_app,  /* nav drawer image to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {

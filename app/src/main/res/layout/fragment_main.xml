@@ -73,6 +73,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="40dp"
-        android:background="#1E88E5"
         android:src="@drawable/add_notepad"/>
 </android.support.design.widget.CoordinatorLayout>
