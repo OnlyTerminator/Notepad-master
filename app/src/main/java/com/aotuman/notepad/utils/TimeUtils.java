@@ -17,7 +17,7 @@ public class TimeUtils {
 
     public static String timeStampToHour(long timeStamp){
         Date date = new Date(timeStamp);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         String dateStr = simpleDateFormat.format(date);
         return dateStr;
     }

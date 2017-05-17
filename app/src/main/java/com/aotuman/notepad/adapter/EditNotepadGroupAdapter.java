@@ -55,10 +55,14 @@ public class EditNotepadGroupAdapter extends RecyclerView.Adapter<EditNotepadGro
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         GroupInfo groupInfo = mGroupInfoList.get(position);
+        if(position < 3){
+            holder.iv_group_delete.setVisibility(View.INVISIBLE);
+            holder.itemView.setBackgroundResource(R.color.appWhite);
+        }
         if(null != groupInfo) {
             holder.tv_group_name.setText(groupInfo.groupName);
-            holder.iv_group_edit.setTag(groupInfo);
-            holder.iv_group_delete.setTag(groupInfo);
+            holder.iv_group_edit.setTag(position);
+            holder.iv_group_delete.setTag(position);
         }
     }
 
@@ -95,15 +99,17 @@ public class EditNotepadGroupAdapter extends RecyclerView.Adapter<EditNotepadGro
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.iv_group_edit:
-                    GroupInfo groupInfo = (GroupInfo) iv_group_edit.getTag();
+                    int pose = (int) iv_group_edit.getTag();
+                    GroupInfo groupInfo = mGroupInfoList.get(pose);
                     if(null != mOnEditGroupClickListener){
-                        mOnEditGroupClickListener.onClick(itemView,groupInfo);
+                        mOnEditGroupClickListener.onClick(itemView,groupInfo,pose);
                     }
                     break;
                 case R.id.iv_group_delete:
-                    GroupInfo deleteGroup = (GroupInfo) iv_group_delete.getTag();
+                    int posd = (int) iv_group_delete.getTag();
+                    GroupInfo deleteGroup = mGroupInfoList.get(posd);
                     if(null != mOnDeleteGroupClickListener){
-                        mOnDeleteGroupClickListener.onClick(itemView,deleteGroup);
+                        mOnDeleteGroupClickListener.onClick(itemView,deleteGroup,posd);
                     }
                     break;
             }

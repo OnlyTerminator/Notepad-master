@@ -9,5 +9,5 @@ import com.aotuman.notepad.entry.GroupInfo;
  */
 
 public interface OnGroupDeleteClickListener {
-    void onClick(View view, GroupInfo groupInfo);
+    void onClick(View view, GroupInfo groupInfo,int position);
 }

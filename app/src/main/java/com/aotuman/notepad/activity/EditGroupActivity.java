@@ -1,7 +1,5 @@
 package com.aotuman.notepad.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -15,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,14 +61,18 @@ public class EditGroupActivity extends AppCompatActivity implements IEditGroupVi
         mAdapter = new EditNotepadGroupAdapter(mGroupInfos, this);
         mAdapter.setOnDeleteGroupClickListener(new OnGroupDeleteClickListener() {
             @Override
-            public void onClick(View view, GroupInfo groupInfo) {
+            public void onClick(View view, GroupInfo groupInfo, int position) {
                 showSnackbar(view, groupInfo);
             }
         });
         mAdapter.setOnEditGroupClickListener(new OnGroupEditClickListener() {
             @Override
-            public void onClick(View view, GroupInfo groupInfo) {
-                showInputDialog(groupInfo.groupName);
+            public void onClick(View view, GroupInfo groupInfo, int position) {
+                if(position < 3){
+                    Toast.makeText(EditGroupActivity.this,"默认分组不可以修改喔！",Toast.LENGTH_SHORT).show();
+                }else {
+                    showInputDialog(groupInfo.groupName);
+                }
             }
         });
         mRecycleView.setAdapter(mAdapter);

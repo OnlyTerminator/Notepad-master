@@ -31,7 +31,6 @@
             android:layout_marginTop="10dp"
             android:hint="新建分组"
             android:includeFontPadding="false"
-            android:textCursorDrawable="@drawable/group_edit_dialog_et"
             android:background="@null"
             android:textSize="20dp" />
 
@@ -40,7 +39,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="16dp"
-            android:background="@color/editGroupDialog" />
+            android:background="@color/appBlue" />
 
         <Button
             android:id="@+id/btn_sure"
@@ -49,7 +48,7 @@
             android:layout_gravity="right"
             android:background="@android:color/transparent"
             android:text="确定"
-            android:textColor="@color/editGroupDialog"
+            android:textColor="@color/appBlue"
             android:textSize="18dp" />
     </LinearLayout>
 </LinearLayout>

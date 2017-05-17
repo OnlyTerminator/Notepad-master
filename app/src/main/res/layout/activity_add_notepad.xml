@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="生活组"
-            android:textColor="#FFBE26"/>
+            android:textColor="@color/appBlue"/>
 
         <TextView
             android:id="@+id/tv_add_time"

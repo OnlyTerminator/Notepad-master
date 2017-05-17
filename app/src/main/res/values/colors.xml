@@ -8,5 +8,6 @@
     <color name="mainBackground">#F2F2F2</color>
     <color name="mainContent">#FFFFFF</color>
     <color name="addNotepadBack">#FAFAFA</color>
-    <color name="editGroupDialog">#4294EA</color>
+    <color name="appBlue">#4294EA</color>
+    <color name="appWhite">#ffffff</color>
 </resources>
