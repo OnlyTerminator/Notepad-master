@@ -109,7 +109,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
 
     @Override
     public void updatePersonalName(String name) {
-        mNickView.setText(name);
+//        mNickView.setText(name);
     }
 
     @Override

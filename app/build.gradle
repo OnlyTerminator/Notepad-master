@@ -10,10 +10,33 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        release {
+            keyAlias "china"
+            keyPassword "ATMAndroid"
+            storeFile file("atm_notepad.jks")
+            storePassword "ATMAndroid"
+        }
+
+        debug {
+            keyAlias "china"
+            keyPassword "ATMAndroid"
+            storeFile file("atm_notepad.jks")
+            storePassword "ATMAndroid"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true //自动移除无用资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            debuggable true
+            signingConfig signingConfigs.debug
         }
     }
 
