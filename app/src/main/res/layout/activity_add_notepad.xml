@@ -15,55 +15,62 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlways|snap" />
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginTop="16dp"
+        android:background="@color/addNotepadBack"
+        android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:orientation="vertical"
-        android:background="@color/addNotepadBack">
-    <EditText
-        android:id="@+id/et_add_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/addNotepadBack"
-        android:hint="标题" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <TextView
-            android:id="@+id/tv_add_group"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_add_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="生活组"
-            android:textColor="@color/appBlue"/>
+            android:background="@color/addNotepadBack"
+            android:hint="标题" />
 
-        <TextView
-            android:id="@+id/tv_add_time"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="15:00"
-            android:textColor="#989898"/>
-    </RelativeLayout>
+            android:layout_marginTop="5dp">
 
-    <EditText
-        android:id="@+id/et_add_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/addNotepadBack"
-        android:layout_marginTop="10dp"
-        android:hint="记事"
-        android:gravity="top" />
+            <TextView
+                android:id="@+id/tv_add_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生活组"
+                android:textColor="@color/appBlue" />
+
+            <TextView
+                android:id="@+id/tv_add_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="15:00"
+                android:textColor="#989898" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/et_add_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/addNotepadBack"
+            android:gravity="top"
+            android:hint="记事"
+            android:minLines="5" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_add_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -1,34 +1,53 @@
 package com.aotuman.notepad.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aotuman.notepad.ATMApplication;
+import com.aotuman.notepad.MainActivity;
 import com.aotuman.notepad.R;
+import com.aotuman.notepad.adapter.AddNotepadAdapter;
+import com.aotuman.notepad.adapter.EditNotepadGroupAdapter;
+import com.aotuman.notepad.adapter.callback.OnGroupDeleteClickListener;
+import com.aotuman.notepad.adapter.callback.OnGroupEditClickListener;
 import com.aotuman.notepad.database.NoteGroupDataManager;
 import com.aotuman.notepad.database.NotepadDataManager;
 import com.aotuman.notepad.define.IAddNotepadView;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.entry.NotepadContentInfo;
 import com.aotuman.notepad.imp.AddNotepadPresenter;
+import com.aotuman.notepad.utils.FileTool;
 import com.aotuman.notepad.utils.SPUtils;
 import com.aotuman.notepad.utils.SharePreEvent;
 import com.aotuman.notepad.utils.TimeUtils;
+import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.ArrayList;
+
 
 public class AddNotepadActivity extends AppCompatActivity implements IAddNotepadView {
     private static final String TAG = "AddNotepadActivity";
+    private static final int REQUEST_CODE = 0;
     private AddNotepadPresenter mPresenter;
     private EditText mEditTitle;
     private EditText mEditContent;
@@ -38,6 +57,8 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
     private GroupInfo mGroupInfo = new GroupInfo();
     private long currentTime = System.currentTimeMillis();
     private NotepadDataManager mNotepadDataManager;
+    private RecyclerView mRecyclerView;
+    private AddNotepadAdapter mAdapter;
     public AddNotepadActivity() {
         mPresenter = new AddNotepadPresenter(this);
     }
@@ -57,6 +78,7 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
         mEditContent = (EditText) findViewById(R.id.et_add_content);
         mTextGroup = (TextView) findViewById(R.id.tv_add_group);
         mTextTime = (TextView) findViewById(R.id.tv_add_time);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rl_add_image);
     }
 
     private void initEvent(){
@@ -66,6 +88,10 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
                 return (event.getKeyCode()== KeyEvent.KEYCODE_ENTER);
             }
         });
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mAdapter = new AddNotepadAdapter(null, this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void initActionBar() {
@@ -76,6 +102,13 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
         mActionBar.setHomeAsUpIndicator(R.drawable.back);
         mActionBar.setTitle("编辑便签");
         mActionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_motepad, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void initData(){
@@ -95,7 +128,16 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                setResult(1);
                 finish();
+                return true;
+            case R.id.action_pic:
+//                Toast.makeText(this,"add pic success",Toast.LENGTH_SHORT).show();
+                //限数量的多选(比喻最多9张)
+                ImageSelectorUtils.openPhoto(AddNotepadActivity.this, REQUEST_CODE, false, 9);
+                return true;
+            case R.id.action_voice:
+                Toast.makeText(this,"add voice success",Toast.LENGTH_SHORT).show();
                 return true;
         }
         //处理其他菜单点击事件
@@ -171,5 +213,19 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
             }
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && data != null) {
+            //获取选择器返回的数据
+            ArrayList<String> images = data.getStringArrayListExtra(ImageSelectorUtils.SELECT_RESULT);
+            if(null != images && !images.isEmpty()){
+                for (int i = 0; i < images.size(); i++){
+                    FileTool.copyFile(images.get(i), FileTool.getImageSDCardPath()+File.separator+i+".jpg");
+                }
+            }
+        }
     }
 }

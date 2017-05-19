@@ -7,4 +7,6 @@
     <string name="delete_group">删除</string>
     <string name="add_group">新建分组</string>
     <string name="edit_group_title">编辑分组</string>
+    <string name="add_pic">插入图片</string>
+    <string name="add_voice">插入语音</string>
 </resources>
