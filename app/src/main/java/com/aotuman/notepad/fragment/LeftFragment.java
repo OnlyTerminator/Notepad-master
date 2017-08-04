@@ -22,6 +22,11 @@ import com.aotuman.notepad.define.IMainView;
 import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.imp.MainPresenter;
 import com.aotuman.notepad.utils.EventBus;
+import com.aotuman.share.MJThirdShareManager;
+import com.aotuman.share.entity.ShareChannelType;
+import com.aotuman.share.entity.ShareContentConfig;
+import com.aotuman.share.entity.ShareContentType;
+import com.aotuman.share.entity.ShareNewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +89,13 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
                 break;
             case R.id.tv_left_name:
             case R.id.iv_left_head:
-                Toast.makeText(LeftFragment.this.getActivity(),"edit persion info",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LeftFragment.this.getActivity(),"edit persion info",Toast.LENGTH_SHORT).show();
+                ShareContentConfig shareContentConfig = new ShareContentConfig.Builder("好用的笔记软件","快和大家一起分享啊")
+                        .shareUrl("http://www.baidu.com")
+                        .putShareType(ShareChannelType.QQ, ShareContentType.WEBPAGE)
+                        .putShareType(ShareChannelType.WX_TIMELINE,ShareContentType.WEBPAGE)
+                        .build();
+                new MJThirdShareManager(this.getActivity(),null).doShare(shareContentConfig,false);
                 break;
         }
     }
