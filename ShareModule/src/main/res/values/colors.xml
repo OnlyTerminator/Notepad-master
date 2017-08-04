@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="warning_yellow">#ffffff01</color>
+    <color name="warning_red">#ffd72e29</color>
+    <color name="warning_blue">#ff0060f3</color>
+    <color name="warning_orange">#fffe9900</color>
+    <color name="warning_white">#ffc0c0c0</color>
+    <color name="bg_color">#f5f5f5</color>
+</resources>

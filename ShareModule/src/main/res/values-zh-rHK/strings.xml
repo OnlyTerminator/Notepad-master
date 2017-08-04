@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="share">分享</string>
+    <string name="sms">訊息</string>
+    <string name="weixin_friends">WeChat</string>
+    <string name="share_platform3">QQ</string>
+    <string name="weixin_friends_circle">朋友圈</string>
+    <string name="manual_share_type0">新浪微博</string>
+    <string name="more">更多</string>
+    <string name="capture_screen">準備分享內容</string>
+
+    <string name="string_not_login">未登陸</string>
+</resources>

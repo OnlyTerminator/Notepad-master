@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SharePlatformWindow" parent="@style/Daily_datail_windws">
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="Daily_datail_windws" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="WXPayActivityStyle" parent="Daily_datail_windws">
+            <item name="android:windowEnterAnimation">@anim/activity_alpha_in</item>
+            <item name="android:windowExitAnimation">@anim/activity_alpha_out</item>
+    </style>
+</resources>
