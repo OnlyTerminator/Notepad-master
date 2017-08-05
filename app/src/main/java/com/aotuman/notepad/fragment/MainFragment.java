@@ -12,15 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aotuman.notepad.ATMApplication;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.activity.AddNotepadActivity;
 import com.aotuman.notepad.adapter.MainContentAdapter;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
-import com.aotuman.notepad.database.NotepadDataManager;
-import com.aotuman.notepad.entry.GroupInfo;
-import com.aotuman.notepad.entry.NotepadContentInfo;
-import com.aotuman.notepad.utils.SPUtils;
-import com.aotuman.notepad.utils.SharePreEvent;
+import com.aotuman.notepad.base.database.NotepadDataManager;
+import com.aotuman.notepad.base.entry.GroupInfo;
+import com.aotuman.notepad.base.entry.NotepadContentInfo;
+import com.aotuman.notepad.base.utils.SPUtils;
+import com.aotuman.notepad.base.utils.SharePreEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,14 +67,14 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
 
     public void initData(){
         mNotepadList.clear();
-        String group = (String) SPUtils.get(SharePreEvent.GROUP_SELECTED_INFO,"");
+        String group = (String) SPUtils.get(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_INFO,"");
         GroupInfo info = new GroupInfo("未分组",0);
         if(TextUtils.isEmpty(group)){
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("groupName",info.groupName);
                 jsonObject.put("groupCount",info.groupCount);
-                SPUtils.put(SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
+                SPUtils.put(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

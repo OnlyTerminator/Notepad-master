@@ -1,10 +1,10 @@
-package com.aotuman.notepad.database;
+package com.aotuman.notepad.base.database;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.aotuman.notepad.entry.NotepadContentInfo;
+import com.aotuman.notepad.base.entry.NotepadContentInfo;
 
 import java.util.ArrayList;
 import java.util.List;

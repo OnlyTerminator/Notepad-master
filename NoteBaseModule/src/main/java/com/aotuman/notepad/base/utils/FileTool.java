@@ -1,16 +1,10 @@
-package com.aotuman.notepad.utils;
+package com.aotuman.notepad.base.utils;
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
-
-import com.aotuman.notepad.ATMApplication;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,7 +21,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by kieth on 3/15.
@@ -606,9 +599,6 @@ public final class FileTool {
     }
 
     public static File getFilesDir(Context context, String folder) {
-        if (context == null) {
-            context = ATMApplication.getInstance();
-        }
         File file = context.getExternalFilesDir(folder);
         if (null == file) {
             file = context.getFilesDir();

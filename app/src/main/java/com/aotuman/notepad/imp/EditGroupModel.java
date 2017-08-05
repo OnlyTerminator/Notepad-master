@@ -1,10 +1,10 @@
 package com.aotuman.notepad.imp;
 
 import com.aotuman.notepad.ATMApplication;
-import com.aotuman.notepad.database.NoteGroupDataManager;
+import com.aotuman.notepad.base.database.NoteGroupDataManager;
+import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.define.IEditGroupModel;
 import com.aotuman.notepad.define.IEditGroupPresenter;
-import com.aotuman.notepad.entry.GroupInfo;
 
 import java.util.List;
 

@@ -1,9 +1,7 @@
-package com.aotuman.notepad.utils;
+package com.aotuman.notepad.base.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.aotuman.notepad.ATMApplication;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,9 +24,9 @@ public class SPUtils {
      * @param event
      * @param object
      */
-    public static void put(SharePreEvent event, Object object) {
+    public static void put(Context context,SharePreEvent event, Object object) {
 
-        SharedPreferences sp = ATMApplication.getInstance().getSharedPreferences(FILE_NAME,
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         String key = event.name();
@@ -57,8 +55,8 @@ public class SPUtils {
      * @param defaultObject
      * @return
      */
-    public static Object get(SharePreEvent event, Object defaultObject) {
-        SharedPreferences sp = ATMApplication.getInstance().getSharedPreferences(FILE_NAME,
+    public static Object get(Context context,SharePreEvent event, Object defaultObject) {
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
                 Context.MODE_PRIVATE);
         String key = event.name();
         if (defaultObject instanceof String) {

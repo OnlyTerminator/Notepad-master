@@ -12,13 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aotuman.notepad.R;
-import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
-import com.aotuman.notepad.entry.NotepadContentInfo;
-import com.aotuman.notepad.utils.TimeUtils;
+import com.aotuman.notepad.base.entry.NotepadContentInfo;
+import com.aotuman.notepad.base.utils.TimeUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**

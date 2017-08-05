@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
         applicationId "com.aotuman.notepad"
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -55,4 +56,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:+'
     compile 'com.github.donkingliang:ImageSelector:1.0.1'
     compile project(':ShareModule')
+    compile project(':APPWidgetModule')
+    compile project(':NoteBaseModule')
 }

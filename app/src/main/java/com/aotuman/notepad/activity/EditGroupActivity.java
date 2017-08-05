@@ -21,9 +21,9 @@ import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.EditNotepadGroupAdapter;
 import com.aotuman.notepad.adapter.callback.OnGroupDeleteClickListener;
 import com.aotuman.notepad.adapter.callback.OnGroupEditClickListener;
-import com.aotuman.notepad.database.NoteGroupDataManager;
+import com.aotuman.notepad.base.database.NoteGroupDataManager;
+import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.define.IEditGroupView;
-import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.imp.EditGroupPresenter;
 import com.aotuman.notepad.view.GroupInfoDialog;
 

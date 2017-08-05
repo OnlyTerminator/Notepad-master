@@ -7,12 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.callback.OnGroupDeleteClickListener;
 import com.aotuman.notepad.adapter.callback.OnGroupEditClickListener;
-import com.aotuman.notepad.entry.GroupInfo;
+import com.aotuman.notepad.base.entry.GroupInfo;
 
 import java.util.List;
 

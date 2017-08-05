@@ -3,12 +3,10 @@ package com.aotuman.notepad.imp;
 import android.text.TextUtils;
 
 import com.aotuman.notepad.ATMApplication;
-import com.aotuman.notepad.database.NoteGroupDataManager;
+import com.aotuman.notepad.base.database.NoteGroupDataManager;
+import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.define.IMainModel;
 import com.aotuman.notepad.define.IMainPresenter;
-import com.aotuman.notepad.entry.GroupInfo;
-import com.aotuman.notepad.utils.SPUtils;
-import com.aotuman.notepad.utils.SharePreEvent;
 
 import org.json.JSONArray;
 import org.json.JSONException;

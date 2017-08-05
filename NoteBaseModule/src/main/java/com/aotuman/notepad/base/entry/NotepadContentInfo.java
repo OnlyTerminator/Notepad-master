@@ -1,4 +1,4 @@
-package com.aotuman.notepad.entry;
+package com.aotuman.notepad.base.entry;
 
 import java.io.Serializable;
 

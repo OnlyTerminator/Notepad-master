@@ -5,16 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aotuman.notepad.ATMApplication;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
-import com.aotuman.notepad.entry.GroupInfo;
-import com.aotuman.notepad.utils.SPUtils;
-import com.aotuman.notepad.utils.SharePreEvent;
+import com.aotuman.notepad.base.entry.GroupInfo;
+import com.aotuman.notepad.base.utils.SPUtils;
+import com.aotuman.notepad.base.utils.SharePreEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +47,7 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         GroupInfo groupInfo = mGroupInfoList.get(position);
-        int count = (int) SPUtils.get(SharePreEvent.GROUP_SELECTED_POSITION,0);
+        int count = (int) SPUtils.get(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_POSITION,0);
         if (position == count){
             mSelectedView = holder.rl_lrft_group;
             holder.rl_lrft_group.setBackgroundResource(R.color.groupSelect);
@@ -85,12 +84,12 @@ public class NotepadGroupAdapter extends RecyclerView.Adapter<NotepadGroupAdapte
                         Object obj = rl_lrft_group.getTag();
                         int position = null == obj ? 0 : (int) obj;
                         GroupInfo groupInfo = mGroupInfoList.get(position);
-                        SPUtils.put(SharePreEvent.GROUP_SELECTED_POSITION,position);
+                        SPUtils.put(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_POSITION,position);
                         JSONObject jsonObject = new JSONObject();
                         try {
                             jsonObject.put("groupName",groupInfo.groupName);
                             jsonObject.put("groupCount",groupInfo.groupCount);
-                            SPUtils.put(SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
+                            SPUtils.put(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

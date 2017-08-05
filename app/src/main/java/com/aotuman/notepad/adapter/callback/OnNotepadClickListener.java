@@ -1,6 +1,6 @@
 package com.aotuman.notepad.adapter.callback;
 
-import com.aotuman.notepad.entry.NotepadContentInfo;
+import com.aotuman.notepad.base.entry.NotepadContentInfo;
 
 /**
  * Created by 凹凸曼 on 2017/5/4.

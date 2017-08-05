@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
-import com.aotuman.notepad.entry.GroupInfo;
+import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.fragment.LeftFragment;
 import com.aotuman.notepad.fragment.MainFragment;
 

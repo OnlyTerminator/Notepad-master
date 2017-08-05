@@ -1,4 +1,4 @@
-package com.aotuman.notepad.database;
+package com.aotuman.notepad.base.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

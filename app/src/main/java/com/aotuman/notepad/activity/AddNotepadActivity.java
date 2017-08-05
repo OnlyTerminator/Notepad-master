@@ -14,28 +14,23 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aotuman.notepad.ATMApplication;
-import com.aotuman.notepad.MainActivity;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.AddNotepadAdapter;
-import com.aotuman.notepad.adapter.EditNotepadGroupAdapter;
-import com.aotuman.notepad.adapter.callback.OnGroupDeleteClickListener;
-import com.aotuman.notepad.adapter.callback.OnGroupEditClickListener;
-import com.aotuman.notepad.database.NoteGroupDataManager;
-import com.aotuman.notepad.database.NotepadDataManager;
+import com.aotuman.notepad.base.database.NoteGroupDataManager;
+import com.aotuman.notepad.base.database.NotepadDataManager;
+import com.aotuman.notepad.base.entry.GroupInfo;
+import com.aotuman.notepad.base.entry.NotepadContentInfo;
+import com.aotuman.notepad.base.utils.FileTool;
+import com.aotuman.notepad.base.utils.SPUtils;
+import com.aotuman.notepad.base.utils.SharePreEvent;
+import com.aotuman.notepad.base.utils.TimeUtils;
 import com.aotuman.notepad.define.IAddNotepadView;
-import com.aotuman.notepad.entry.GroupInfo;
-import com.aotuman.notepad.entry.NotepadContentInfo;
 import com.aotuman.notepad.imp.AddNotepadPresenter;
-import com.aotuman.notepad.utils.FileTool;
-import com.aotuman.notepad.utils.SPUtils;
-import com.aotuman.notepad.utils.SharePreEvent;
-import com.aotuman.notepad.utils.TimeUtils;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 
 import org.json.JSONException;
@@ -113,7 +108,7 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
 
     private void initData(){
         mNotepadDataManager = NotepadDataManager.getInstance(ATMApplication.getInstance());
-        String group = (String) SPUtils.get(SharePreEvent.GROUP_SELECTED_INFO,"");
+        String group = (String) SPUtils.get(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_INFO,"");
         try {
             JSONObject jsonObject = new JSONObject(group);
             mGroupInfo.groupName = jsonObject.getString("groupName");
@@ -205,7 +200,7 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
                 try {
                     jsonObject.put("groupName",mGroupInfo.groupName);
                     jsonObject.put("groupCount",mGroupInfo.groupCount);
-                    SPUtils.put(SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
+                    SPUtils.put(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

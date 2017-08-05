@@ -3,9 +3,9 @@ package com.aotuman.notepad.imp;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.aotuman.notepad.base.entry.NotepadContentInfo;
 import com.aotuman.notepad.define.IAddNotepadPresenter;
 import com.aotuman.notepad.define.IAddNotepadView;
-import com.aotuman.notepad.entry.NotepadContentInfo;
 
 public class AddNotepadPresenter implements IAddNotepadPresenter {
 

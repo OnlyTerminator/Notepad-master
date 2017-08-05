@@ -1,4 +1,4 @@
-package com.aotuman.notepad.appwidget;
+package com.aotuman.appwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

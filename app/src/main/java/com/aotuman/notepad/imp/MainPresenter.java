@@ -1,8 +1,8 @@
 package com.aotuman.notepad.imp;
 
+import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.define.IMainPresenter;
 import com.aotuman.notepad.define.IMainView;
-import com.aotuman.notepad.entry.GroupInfo;
 
 import java.util.List;
 

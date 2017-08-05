@@ -12,21 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.activity.EditGroupActivity;
 import com.aotuman.notepad.adapter.NotepadGroupAdapter;
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
+import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.define.IMainView;
-import com.aotuman.notepad.entry.GroupInfo;
 import com.aotuman.notepad.imp.MainPresenter;
-import com.aotuman.notepad.utils.EventBus;
 import com.aotuman.share.MJThirdShareManager;
 import com.aotuman.share.entity.ShareChannelType;
 import com.aotuman.share.entity.ShareContentConfig;
 import com.aotuman.share.entity.ShareContentType;
-import com.aotuman.share.entity.ShareNewConfig;
 
 import java.util.ArrayList;
 import java.util.List;

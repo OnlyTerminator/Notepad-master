@@ -1,4 +1,4 @@
-package com.aotuman.notepad.utils;
+package com.aotuman.notepad.base.utils;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;

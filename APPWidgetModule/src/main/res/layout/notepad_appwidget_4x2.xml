@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/widget4x1_background">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/add" />
+
+        <TextView
+            android:id="@+id/tv_add_notepad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_add"
+            android:text="添加便签"
+            android:textColor="#000000"
+            android:textSize="18dp" />
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:format12Hour="hh:mm"
+            android:format24Hour="kk:mm"
+            android:textColor="#cc000000"
+            android:textSize="24dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/rl_title"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:background="#96000000" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_title"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/tv_notepad_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="我是一条没有标题的便签"
+            android:textSize="16dp"
+            android:textColor="#cc000000"/>
+
+        <TextView
+            android:id="@+id/tv_notepad_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_notepad_title"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="3dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="震惊！这条便签竟然没有内容"
+            android:textSize="12dp"
+            android:textColor="#cc000000"/>
+
+        <TextView
+            android:id="@+id/tv_notepad_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_notepad_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="5月15日 12:12"
+            android:textSize="12dp"
+            android:textColor="#ac000000"/>
+
+        <TextView
+            android:id="@+id/tv_notepad_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_notepad_content"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:text="点击查看下一条"
+            android:textSize="12dp"
+            android:textColor="#ac000000"/>
+    </RelativeLayout>
+</RelativeLayout>
