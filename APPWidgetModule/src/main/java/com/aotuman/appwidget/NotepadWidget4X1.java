@@ -5,4 +5,8 @@ package com.aotuman.appwidget;
  */
 
 public class NotepadWidget4X1 extends NotePadAppWidgetProvider {
+    @Override
+    protected int widgetType() {
+        return 41;
+    }
 }

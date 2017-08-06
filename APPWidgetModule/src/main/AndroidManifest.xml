@@ -16,6 +16,8 @@
             android:label="简易便签">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.aotuman.next.notepad" />
+                <action android:name="com.aotuman.top.notepad" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/notepad_appwidget_info_4x2" />

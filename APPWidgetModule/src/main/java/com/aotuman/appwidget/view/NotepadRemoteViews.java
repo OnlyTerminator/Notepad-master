@@ -10,17 +10,16 @@ import com.aotuman.appwidget.NotePadAppWidgetProvider;
  */
 
 public abstract class NotepadRemoteViews extends RemoteViews {
-    private Class<? extends NotePadAppWidgetProvider> mAWProvider;
-    public NotepadRemoteViews(Context context, int layoutId, Class<? extends NotePadAppWidgetProvider> clz) {
+    protected static final String NEXT_NOTEPAD = "com.aotuman.next.notepad";
+    protected static final String TOP_NOTEPAD = "com.aotuman.top.notepad";
+    public NotepadRemoteViews(Context context, int layoutId) {
         super(context.getPackageName(), layoutId);
-        mAWProvider = clz;
         setHotspotAction(context);
     }
 
     public abstract void setHotspotAction(Context context);
 
-    public abstract void updateView();
-    public Class<? extends NotePadAppWidgetProvider> getProviderClz(){
-        return mAWProvider;
-    }
+    public abstract void updateView(Context context);
+
+    public abstract void changeView(Context context,int type); //0表示上一篇 1表示下一篇
 }

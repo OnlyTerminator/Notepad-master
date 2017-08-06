@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aotuman.appwidget.NotePadAppWidgetManager;
 import com.aotuman.notepad.ATMApplication;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.AddNotepadAdapter;
@@ -123,6 +124,7 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                onBackPressed();
                 setResult(1);
                 finish();
                 return true;

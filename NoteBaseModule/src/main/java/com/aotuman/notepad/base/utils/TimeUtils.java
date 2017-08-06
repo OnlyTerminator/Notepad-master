@@ -15,6 +15,13 @@ public class TimeUtils {
         return dateStr;
     }
 
+    public static String timeStampToDateAndHour(long timeStamp){
+        Date date = new Date(timeStamp);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String dateStr = simpleDateFormat.format(date);
+        return dateStr;
+    }
+
     public static String timeStampToHour(long timeStamp){
         Date date = new Date(timeStamp);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");

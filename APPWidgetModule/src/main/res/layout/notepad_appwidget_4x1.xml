@@ -13,6 +13,7 @@
         android:src="@drawable/add"/>
 
     <TextView
+        android:id="@+id/tv_add_notepad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="添加便签"

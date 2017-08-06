@@ -8,5 +8,6 @@ public enum SharePreEvent {
     GROUP_SELECTED_POSITION,
     GROUP_SELECTED_INFO,
     IS_FIRST,
+    APPWIDGET_SELECT,
 
 }
