@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aotuman.notepad.base.utils.CommonUtils;
 import com.aotuman.share.R;
 import com.aotuman.share.entity.ShareChannelType;
 import com.aotuman.share.entity.ShareContentType;
@@ -32,7 +33,15 @@ public class SharePlatform extends Dialog {
         super(activity, R.style.Daily_datail_windws);
         View contentView = LayoutInflater.from(activity).inflate(R.layout.popup_share_platforms, null);
         mShareChannelType = shareContentTypeArrayMap;
-        setContentView(contentView);
+        int height = 0;
+        if (null != mShareChannelType && mShareChannelType.size() < 4) {
+            height = (int) (200 * activity.getResources().getDisplayMetrics().density);
+        } else {
+            height = (int) (271 * activity.getResources().getDisplayMetrics().density);
+        }
+        int width = CommonUtils.getScreenWidth() - (int) (15 * activity.getResources().getDisplayMetrics().density);
+
+        setContentView(contentView,new ViewGroup.LayoutParams(width, height));
         setCancelable(true);
         setCanceledOnTouchOutside(true);
         mGridView = (GridView) contentView.findViewById(R.id.gv_share);
