@@ -21,7 +21,7 @@ public class NotepadDataBaseHelp extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS notepadinfo (id integer primary key autoincrement, title TEXT, content TEXT, notegroup TEXT, time TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS notepadinfo (id integer primary key autoincrement, title TEXT, content TEXT, notegroup TEXT, time TEXT, images TEXT)");
     }
 
     @Override

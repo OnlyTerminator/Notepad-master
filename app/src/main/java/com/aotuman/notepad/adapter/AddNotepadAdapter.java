@@ -2,6 +2,7 @@ package com.aotuman.notepad.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.callback.OnGroupDeleteClickListener;
 import com.aotuman.notepad.adapter.callback.OnGroupEditClickListener;
 import com.aotuman.notepad.base.entry.GroupInfo;
+import com.aotuman.notepad.base.entry.NotepadContentInfo;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,20 +23,14 @@ import java.util.List;
  */
 
 public class AddNotepadAdapter extends RecyclerView.Adapter<AddNotepadAdapter.MyViewHolder> {
-    private List<GroupInfo> mGroupInfoList;
+    private List<String> mImageList;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private OnGroupDeleteClickListener mOnDeleteGroupClickListener;
-    private OnGroupEditClickListener mOnEditGroupClickListener;
-    private int mBackground;
 
-    public AddNotepadAdapter(List<GroupInfo> groupInfoList, Context context) {
-        this.mGroupInfoList = groupInfoList;
+    public AddNotepadAdapter(List<String> images, Context context) {
+        this.mImageList = images;
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
-        TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.selectableItemBackground, typedValue, true);
-        this.mBackground = typedValue.resourceId;
     }
 
     @Override
@@ -46,12 +43,17 @@ public class AddNotepadAdapter extends RecyclerView.Adapter<AddNotepadAdapter.My
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
+        if(null != mImageList && position < mImageList.size()) {
+            String imagePath = mImageList.get(position);
+            if(!TextUtils.isEmpty(imagePath)){
+                Picasso.with(mContext).load("file://"+imagePath).into(holder.iv_add_image);
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        return null == mGroupInfoList ? 0 : mGroupInfoList.size();
+        return null == mImageList ? 0 : mImageList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

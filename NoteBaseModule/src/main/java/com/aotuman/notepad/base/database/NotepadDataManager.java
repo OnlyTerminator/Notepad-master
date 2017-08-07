@@ -29,30 +29,37 @@ public class NotepadDataManager {
     }
 
     public void insertNotepadInfo(NotepadContentInfo info) {
-        String sql = "insert into notepadinfo (title,content,notegroup,time)values(?,?,?,?)";
+        String sql = "insert into notepadinfo (title,content,notegroup,time,images)values(?,?,?,?,?)";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{info.title, info.content, info.group, info.time});
+        db.execSQL(sql, new Object[]{info.title, info.content, info.group, info.time,info.imageLists});
         db.close();
     }
 
-    public void updateNotepadTitle(int id, String title, long time) {
-        String sql = "update notepadinfo set title = ?,time = ? where id = ?";
+    public void updateNotepadTitle(int id, String title, long time, String images) {
+        String sql = "update notepadinfo set title = ?,time = ?, images = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{title, String.valueOf(time), id});
+        db.execSQL(sql, new Object[]{title, String.valueOf(time), images,id});
         db.close();
     }
 
-    public void updateNotepadContent(int id, String content, long time) {
-        String sql = "update notepadinfo set content = ?,time = ? where id = ?";
+    public void updateNotepadPic(int id,long time, String images) {
+        String sql = "update notepadinfo set time = ?, images = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{content, String.valueOf(time), id});
+        db.execSQL(sql, new Object[]{String.valueOf(time), images,id});
         db.close();
     }
 
-    public void updateNotepadTitleAndContent(int id, String title, String content, long time) {
-        String sql = "update notepadinfo set title = ?,content = ?,time = ? where id = ?";
+    public void updateNotepadContent(int id, String content, long time, String images) {
+        String sql = "update notepadinfo set content = ?,time = ?,images = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
-        db.execSQL(sql, new Object[]{title, content, String.valueOf(time), id});
+        db.execSQL(sql, new Object[]{content, String.valueOf(time), images,id});
+        db.close();
+    }
+
+    public void updateNotepadTitleAndContent(int id, String title, String content, long time,String images) {
+        String sql = "update notepadinfo set title = ?,content = ?,time = ?,images = ? where id = ?";
+        SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
+        db.execSQL(sql, new Object[]{title, content, String.valueOf(time), images,id});
         db.close();
     }
 
@@ -77,6 +84,7 @@ public class NotepadDataManager {
                 notepadContentInfo.content = cursor.getString(2);
                 notepadContentInfo.group = cursor.getString(3);
                 notepadContentInfo.time = cursor.getString(4);
+                notepadContentInfo.imageLists = cursor.getString(5);
                 notepadContentInfos.add(notepadContentInfo);
             }
             cursor.close();
@@ -99,6 +107,7 @@ public class NotepadDataManager {
                 notepadContentInfo.content = cursor.getString(2);
                 notepadContentInfo.group = cursor.getString(3);
                 notepadContentInfo.time = cursor.getString(4);
+                notepadContentInfo.imageLists = cursor.getString(5);
                 notepadContentInfos.add(notepadContentInfo);
             }
             cursor.close();

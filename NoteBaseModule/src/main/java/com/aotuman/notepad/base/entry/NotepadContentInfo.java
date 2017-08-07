@@ -1,6 +1,7 @@
 package com.aotuman.notepad.base.entry;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by 凹凸曼 on 2017/5/7.
@@ -14,6 +15,7 @@ public class NotepadContentInfo implements Serializable {
     public String content;
     public String time;
     public String group;
+    public String imageLists;
 
     public NotepadContentInfo() {
 

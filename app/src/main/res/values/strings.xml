@@ -9,4 +9,5 @@
     <string name="edit_group_title">编辑分组</string>
     <string name="add_pic">插入图片</string>
     <string name="add_voice">插入语音</string>
+    <string name="share_notepad">分享便签</string>
 </resources>
