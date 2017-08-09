@@ -46,7 +46,12 @@ public class AddNotepadAdapter extends RecyclerView.Adapter<AddNotepadAdapter.My
         if(null != mImageList && position < mImageList.size()) {
             String imagePath = mImageList.get(position);
             if(!TextUtils.isEmpty(imagePath)){
-                Picasso.with(mContext).load("file://"+imagePath).into(holder.iv_add_image);
+                Picasso.with(mContext)
+                        .load("file://"+imagePath)
+                        .centerInside()
+                        .fit()
+                        .noFade()
+                        .noPlaceholder().into(holder.iv_add_image);
             }
         }
     }
