@@ -26,6 +26,7 @@ public class AddNotepadAdapter extends RecyclerView.Adapter<AddNotepadAdapter.My
     private List<String> mImageList;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
+    private NotepadImageClickListener mListener;
 
     public AddNotepadAdapter(List<String> images, Context context) {
         this.mImageList = images;
@@ -41,13 +42,18 @@ public class AddNotepadAdapter extends RecyclerView.Adapter<AddNotepadAdapter.My
         return myViewHolder;
     }
 
+    public void setImageOnClickListener(NotepadImageClickListener listener) {
+        mListener = listener;
+    }
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        if(null != mImageList && position < mImageList.size()) {
+        if (null != mImageList && position < mImageList.size()) {
             String imagePath = mImageList.get(position);
-            if(!TextUtils.isEmpty(imagePath)){
+            if (!TextUtils.isEmpty(imagePath)) {
+                holder.iv_add_image.setTag(position);
                 Picasso.with(mContext)
-                        .load("file://"+imagePath)
+                        .load("file://" + imagePath)
                         .centerInside()
                         .fit()
                         .noFade()
@@ -67,13 +73,18 @@ public class AddNotepadAdapter extends RecyclerView.Adapter<AddNotepadAdapter.My
         public MyViewHolder(View itemView) {
             super(itemView);
             iv_add_image = (ImageView) itemView.findViewById(R.id.iv_add_image);
+            iv_add_image.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-
+            if (null != mListener) {
+                mListener.onclick((int)v.getTag());
             }
         }
+    }
+
+    public interface NotepadImageClickListener {
+        void onclick(int position);
     }
 }

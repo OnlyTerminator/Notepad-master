@@ -61,7 +61,7 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
     private RecyclerView mRecyclerView;
     private AddNotepadAdapter mAdapter;
     private MJThirdShareManager mMjThirdShareManager;
-    private List<String> mImagePath = new ArrayList<>();
+    private ArrayList<String> mImagePath = new ArrayList<>();
     public AddNotepadActivity() {
         mPresenter = new AddNotepadPresenter(this);
     }
@@ -95,6 +95,15 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new AddNotepadAdapter(mImagePath, this);
+        mAdapter.setImageOnClickListener(new AddNotepadAdapter.NotepadImageClickListener() {
+            @Override
+            public void onclick(int position) {
+                Intent intent = new Intent(AddNotepadActivity.this,PictureDetailActivity.class);
+                intent.putExtra("index",position);
+                intent.putStringArrayListExtra("images",mImagePath);
+                startActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 

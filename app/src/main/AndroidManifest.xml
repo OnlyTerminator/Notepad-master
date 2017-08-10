@@ -20,7 +20,8 @@
         </activity>
         <activity
             android:name=".activity.AddNotepadActivity"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateHidden" />
+
         <activity android:name=".activity.EditGroupActivity" />
 
         //图片选择Activity
@@ -30,6 +31,9 @@
         <activity android:name="com.donkingliang.imageselector.PreviewActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
+
+        <activity android:name=".activity.PictureDetailActivity" />
+
     </application>
 
 </manifest>
