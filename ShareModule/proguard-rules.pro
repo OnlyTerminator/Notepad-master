@@ -23,3 +23,34 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#ShareSDK
+-keep class * extends android.app.Dialog
+-keep class com.tencent.mm.sdk.** {*;}
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-dontwarn cn.sharesdk.**
+
+# 腾讯混淆
+-keep class com.tencent.open.TDialog$*
+-keep class com.tencent.open.TDialog$* {*;}
+-keep class com.tencent.open.PKDialog
+-keep class com.tencent.open.PKDialog {*;}
+-keep class com.tencent.open.PKDialog$*
+-keep class com.tencent.open.PKDialog$* {*;}
+-keep class com.qq.e.** {
+    public protected *;
+}
+
+# 新浪微博混淆
+-dontwarn com.weibo.sdk.android.WeiboDialog
+-keep class com.weibo.sdk.android.** {*;}
+-keep class com.sina.sso.** {*;}
+-keep class com.sina.weibo.sdk.** { *; }
+
+# 微信混淆
+-keep class com.tencent.mm.sdk.openapi.WXMediaMessage {*;}
+-keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
+
+-keep class com.tencent.mm.opensdk.** {*;}
+-keep class com.tencent.wxop.** {*;}
+-keep class com.tencent.mm.sdk.** {*;}
