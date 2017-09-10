@@ -23,7 +23,7 @@ public class ShareNewConfig {
     /**
      * TODO 新浪app_key
      */
-    public static final String SINA_OAUTH_REDIRECT_URL = "http://www.mojichina.com";
+    public static String SINA_OAUTH_REDIRECT_URL ;
     public static final String SINA_OAUTH_SCOPE = "email,follow_app_official_microblog";
     public static final String HTTP_SERVER_HEAD = "https://api.weibo.com/2";
     public static final String HTTP_GET_USERINFO = "/users/show.json";
@@ -39,11 +39,12 @@ public class ShareNewConfig {
     private static final String MJ_KEY_WEIXIN_SECRET = "99a0e1a093576fcab315baa95270737f";
 
 
-    public static void initShareKey(String keyWeixin, String keyWeixinSecret, String keySina, String keyQQ) {
+    public static void initShareKey(String keyWeixin, String keyWeixinSecret, String keySina, String keyQQ,String sinaOauthUrl) {
         ShareNewConfig.keyWeixin = keyWeixin;
         ShareNewConfig.keyWeixinSecret = keyWeixinSecret;
         ShareNewConfig.keySina = keySina;
         ShareNewConfig.keyQQ = keyQQ;
+        ShareNewConfig.SINA_OAUTH_REDIRECT_URL = sinaOauthUrl;
     }
 
 

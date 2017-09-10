@@ -60,7 +60,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:cardview-v7:+'
     compile 'com.github.donkingliang:ImageSelector:1.0.1'
-    compile project(':ShareModule')
+    compile 'com.aotuman.share:android-share1.0:1.0.0'
     compile project(':APPWidgetModule')
     compile project(':NoteBaseModule')
     compile 'com.squareup.picasso:picasso:2.5.2'

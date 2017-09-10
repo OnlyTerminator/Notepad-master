@@ -86,9 +86,8 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
                 break;
             case R.id.tv_left_name:
             case R.id.iv_left_head:
-//                Toast.makeText(LeftFragment.this.getActivity(),"edit persion info",Toast.LENGTH_SHORT).show();
-                ShareContentConfig shareContentConfig = new ShareContentConfig.Builder("好用的笔记软件","快和大家一起分享啊")
-                        .shareUrl("http://www.baidu.com")
+                ShareContentConfig shareContentConfig = new ShareContentConfig.Builder("超好用的笔记软件","一键添加笔记，支持桌面插件查看，方便快捷")
+                        .shareUrl("http://sj.qq.com/myapp/detail.htm?apkName=com.aotuman.notepad")
                         .putShareType(ShareChannelType.QQ, ShareContentType.WEBPAGE)
                         .putShareType(ShareChannelType.WX_TIMELINE,ShareContentType.WEBPAGE)
                         .build();

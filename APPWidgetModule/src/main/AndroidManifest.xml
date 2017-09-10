@@ -3,7 +3,7 @@
     <application >
         <receiver android:name=".NotepadWidget4X1"
             android:exported="true"
-            android:label="简易便签">
+            android:label="简易便签4x1">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -13,7 +13,7 @@
 
         <receiver android:name=".NotepadWidget4X2"
             android:exported="true"
-            android:label="简易便签">
+            android:label="简易便签4x2">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.aotuman.next.notepad" />

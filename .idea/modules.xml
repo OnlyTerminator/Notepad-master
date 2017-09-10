@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/APPWidgetModule/APPWidgetModule.iml" filepath="$PROJECT_DIR$/APPWidgetModule/APPWidgetModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/NoteBaseModule/NoteBaseModule.iml" filepath="$PROJECT_DIR$/NoteBaseModule/NoteBaseModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/Notepad-master.iml" filepath="$PROJECT_DIR$/Notepad-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ShareModule/ShareModule.iml" filepath="$PROJECT_DIR$/ShareModule/ShareModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
