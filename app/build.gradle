@@ -8,8 +8,8 @@ android {
         applicationId "com.aotuman.notepad"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
     }
 
     lintOptions {
@@ -45,13 +45,6 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-
-    repositories {
-        jcenter()
-
-        maven { url 'https://jitpack.io' }
-    }
-
 }
 
 dependencies {
