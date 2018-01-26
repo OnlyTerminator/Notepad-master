@@ -215,42 +215,5 @@ public class PictureDetailActivity extends AppCompatActivity {
             return;
         }
         firstClickTime = SystemClock.uptimeMillis();
-//        MJPools.executeWithMJThreadPool(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(300);
-//                    if (secondClickTime == 0) {
-//                        mBottomView.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                exitAnimation();//触发点击，退出
-//                            }
-//                        });
-//                    }
-//                    firstClickTime = 0;
-//                    secondClickTime = 0;
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
     }
-
-//    private boolean shouldDispatch(MotionEvent event) {
-//        float x = event.getX();
-//        float y = event.getY();
-//        int left = mDownloadBtn.getLeft();
-//        int right = mDownloadBtn.getRight();
-//        int top = mDownloadBtn.getTop();
-//        int bottom = mDownloadBtn.getBottom();
-//        if (left <= x &&
-//                x <= right &&
-//                top <= y &&
-//                y <= bottom) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }

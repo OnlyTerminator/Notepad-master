@@ -15,8 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:scaleType="fitCenter"
-            tools:src="@drawable/moji_cloud" />
+            android:scaleType="fitCenter" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -38,11 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:scaleType="fitCenter"
-            tools:src="@drawable/moji_cloud" />
-
-        <include layout="@layout/share_bottom_qr" />
+            android:scaleType="fitCenter"/>
     </RelativeLayout>
-
 
 </RelativeLayout>

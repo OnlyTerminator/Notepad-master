@@ -57,7 +57,8 @@ public class AddNotepadAdapter extends RecyclerView.Adapter<AddNotepadAdapter.My
                         .centerInside()
                         .fit()
                         .noFade()
-                        .noPlaceholder().into(holder.iv_add_image);
+                        .noPlaceholder()
+                        .into(holder.iv_add_image);
             }
         }
     }

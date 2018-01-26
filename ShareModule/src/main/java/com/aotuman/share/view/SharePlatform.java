@@ -10,7 +10,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.aotuman.notepad.base.utils.CommonUtils;
+import com.aotuman.share.CommonUtils;
 import com.aotuman.share.R;
 import com.aotuman.share.entity.ShareChannelType;
 import com.aotuman.share.entity.ShareContentType;
@@ -39,7 +39,7 @@ public class SharePlatform extends Dialog {
         } else {
             height = (int) (271 * activity.getResources().getDisplayMetrics().density);
         }
-        int width = CommonUtils.getScreenWidth() - (int) (15 * activity.getResources().getDisplayMetrics().density);
+        int width = CommonUtils.getScreenWidth(activity) - (int) (15 * activity.getResources().getDisplayMetrics().density);
 
         setContentView(contentView,new ViewGroup.LayoutParams(width, height));
         setCancelable(true);

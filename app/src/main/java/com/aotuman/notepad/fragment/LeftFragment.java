@@ -18,8 +18,7 @@ import com.aotuman.notepad.activity.EditGroupActivity;
 import com.aotuman.notepad.adapter.NotepadGroupAdapter;
 import com.aotuman.notepad.adapter.callback.OnGroupClickListener;
 import com.aotuman.notepad.base.entry.GroupInfo;
-import com.aotuman.notepad.define.IMainView;
-import com.aotuman.notepad.imp.MainPresenter;
+import com.aotuman.notepad.presenter.LeftPresenter;
 import com.aotuman.share.MJThirdShareManager;
 import com.aotuman.share.entity.ShareChannelType;
 import com.aotuman.share.entity.ShareContentConfig;
@@ -32,7 +31,7 @@ import java.util.List;
  * Created by aotuman on 2017/5/3.
  */
 
-public class LeftFragment extends Fragment implements IMainView,View.OnClickListener,OnGroupClickListener{
+public class LeftFragment extends Fragment implements LeftPresenter.LeftCallback,View.OnClickListener,OnGroupClickListener{
     private static final String TAG = "LeftFragment";
     private View mView;
     private ImageView mHeadImageView;
@@ -41,7 +40,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
     private RecyclerView mRecycleView;
     private NotepadGroupAdapter mAdapter;
     private List<GroupInfo> mGroupInfoList = new ArrayList<>();
-    private MainPresenter mMainPresenter;
+    private LeftPresenter mMainPresenter;
     private OnGroupClickListener mOnGroupClickListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,13 +48,13 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
             mView = inflater.inflate(R.layout.fragment_left, container, false);
             initView(mView);
             initEvent();
-            initData();
+            mMainPresenter.initLeftData();
         }
         return mView;
     }
 
     private void initView(View view){
-        mMainPresenter = new MainPresenter(this);
+        mMainPresenter = new LeftPresenter(this);
         mHeadImageView = (ImageView) view.findViewById(R.id.iv_left_head);
         mNickView = (TextView) view.findViewById(R.id.tv_left_name);
         mEditorView = (TextView) view.findViewById(R.id.tv_left_editor);
@@ -74,7 +73,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
     }
 
     public void initData(){
-        mMainPresenter.getLeftData();
+        mMainPresenter.initLeftData();
     }
 
     @Override
@@ -131,7 +130,7 @@ public class LeftFragment extends Fragment implements IMainView,View.OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == 1){
-            initData();
+            mMainPresenter.initLeftData();
         }
     }
 }

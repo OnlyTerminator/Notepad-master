@@ -78,11 +78,6 @@ public class MJThirdShareManager implements DataPrepareListener {
     private void showPlatformDialog() {
 //        dismissDialog();
         boolean canShowDialog = mContext != null && !mContext.isFinishing();
-        if (Build.VERSION.SDK_INT > 17) {
-            if (null == mContext || mContext.isDestroyed()) {
-                canShowDialog = false;
-            }
-        }
         if (!canShowDialog) {
             if (null != mShareListener) {
                 mShareListener.onError(null);
@@ -118,22 +113,6 @@ public class MJThirdShareManager implements DataPrepareListener {
         return mPlatformDialog != null && mPlatformDialog.isShowing();
     }
 
-//    private void showLoadingDialog() {
-//        dismissDialog();
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DeviceTool.dp2px(120), DeviceTool.dp2px(120));
-//        mLoadingDialog = new MJDialogLoadingControl.Builder(mContext).loadingMsg(mContext.getString(R.string.capture_screen)).layoutParams(params).build();
-//        mLoadingDialog.show();
-//    }
-
-//    private void dismissDialog() {
-//        if (null != mPlatformDialog && mPlatformDialog.isShowing()) {
-//            mPlatformDialog.dismiss();
-//        }
-//        if (null != mLoadingDialog && mLoadingDialog.isShowing()) {
-//            mLoadingDialog.dismiss();
-//        }
-//    }
-
     /**
      * 准备图片，贴上模糊背景图
      *
@@ -155,6 +134,10 @@ public class MJThirdShareManager implements DataPrepareListener {
      * @param listener
      */
     private void doRealShare(Activity activity, ShareChannelType channelType, ShareRealContent content, ShareListener listener) {
+        if(null == content){
+            Toast.makeText(activity,"您还没有设置需要分享的内容！",Toast.LENGTH_SHORT).show();
+            return;
+        }
         mChannelType = channelType;
         ShareBackListener.getInstance().setShareChannelType(mChannelType);
         if (mStatusManager.shareInstalledCheck(channelType, activity)) {

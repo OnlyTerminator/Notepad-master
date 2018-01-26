@@ -1,6 +1,12 @@
 package com.aotuman.notepad.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Picture;
+import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +17,17 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aotuman.appwidget.NotePadAppWidgetManager;
 import com.aotuman.notepad.ATMApplication;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.AddNotepadAdapter;
@@ -30,13 +39,14 @@ import com.aotuman.notepad.base.utils.FileTool;
 import com.aotuman.notepad.base.utils.SPUtils;
 import com.aotuman.notepad.base.utils.SharePreEvent;
 import com.aotuman.notepad.base.utils.TimeUtils;
-import com.aotuman.notepad.define.IAddNotepadView;
-import com.aotuman.notepad.imp.AddNotepadPresenter;
+import com.aotuman.notepad.presenter.AddNotepadPresenter;
+import com.aotuman.share.CommonUtils;
 import com.aotuman.share.MJThirdShareManager;
 import com.aotuman.share.entity.ShareContentConfig;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,8 +55,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class AddNotepadActivity extends AppCompatActivity implements IAddNotepadView {
+
+public class AddNotepadActivity extends AppCompatActivity implements AddNotepadPresenter.AddNotepadCallback {
     private static final String TAG = "AddNotepadActivity";
     private static final int REQUEST_CODE = 0;
     private AddNotepadPresenter mPresenter;
@@ -54,6 +73,7 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
     private EditText mEditContent;
     private TextView mTextGroup;
     private TextView mTextTime;
+    private LinearLayout mLinearLayout;
     private NotepadContentInfo mNotepad;
     private GroupInfo mGroupInfo = new GroupInfo();
     private long currentTime = System.currentTimeMillis();
@@ -82,6 +102,7 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
         mTextGroup = (TextView) findViewById(R.id.tv_add_group);
         mTextTime = (TextView) findViewById(R.id.tv_add_time);
         mRecyclerView = (RecyclerView) findViewById(R.id.rl_add_image);
+        mLinearLayout = (LinearLayout) findViewById(R.id.ll_notepad_content);
     }
 
     private void initEvent(){
@@ -156,12 +177,111 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
             case R.id.action_share:
                 String title = mEditTitle.getText().toString();
                 String content = mEditContent.getText().toString();
+                final String path = CommonUtils.getFilesDir(this, "share").getAbsolutePath() + File.separator + "ATMShareImage.png";
                 ShareContentConfig.Builder builder = new ShareContentConfig.Builder(title,content);
-                mMjThirdShareManager.doShare(builder.build(),false);
+                builder.localImagePath(path);
+                mMjThirdShareManager.doShare(builder.build(),true);
+                final List<Bitmap> bitmapList = new ArrayList<>();
+                mEditTitle.buildDrawingCache();
+                mTextGroup.buildDrawingCache();
+                mEditContent.buildDrawingCache();
+                Bitmap titleBitmap = mEditTitle.getDrawingCache();
+                Bitmap groupBitmap = mTextGroup.getDrawingCache();
+                Bitmap contentBitmap = mEditContent.getDrawingCache();
+                bitmapList.add(titleBitmap);
+                bitmapList.add(groupBitmap);
+                bitmapList.add(contentBitmap);
+                Observable.create(new ObservableOnSubscribe<Object>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
+//                        Bitmap last = addBitmap(bitmapList);
+                        if(null != mImagePath && !mImagePath.isEmpty()){
+                            for (String iPath : mImagePath){
+                                if(!TextUtils.isEmpty(iPath)) {
+//                                    bitmapList.clear();
+//                                    bitmapList.add(last);
+                                    Bitmap bitmap = Picasso.with(AddNotepadActivity.this).load("file://"+iPath).get();
+                                    bitmapList.add(bitmap);
+//                                    last = addBitmap(bitmapList);
+                                }
+                            }
+                        }
+                        Bitmap last = addBitmap(bitmapList);
+                        CommonUtils.writeBitmap(new File(path),last,100,true);
+                        emitter.onNext(new Object());
+                        emitter.onComplete();
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Object>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(Object list) {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                mMjThirdShareManager.prepareSuccess(false);
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                mMjThirdShareManager.prepareSuccess(true);
+                            }
+                        });
+//                List<Bitmap> bitmapList = new ArrayList<>();
+//
+//                int count = mRecyclerView.getAdapter().getItemCount();
+//                for (int i = 0; i < count;i++){
+//                    View view = mRecyclerView.getChildAt(i);
+//                    view.buildDrawingCache();
+//                    Bitmap bitmap2 = view.getDrawingCache();
+//                    bitmapList.add(bitmap2);
+//                }
+//                Bitmap bitmap = addBitmap(bitmapList);
+//                View view = LayoutInflater.from(this).inflate(R.layout.view_notepad_share,null);
+//                LinearLayout ll_share = (LinearLayout) view.findViewById(R.id.ll_share);
+//                if(null != mImagePath && !mImagePath.isEmpty()){
+//                    for (String iPath : mImagePath) {
+//                        ImageView imageView = new ImageView(this);
+//                        Picasso.with(this).load(iPath).into(imageView);
+//                        ll_share.addView(imageView);
+//                    }
+//                }
+//                ll_share.setDrawingCacheEnabled(false);
+//                ll_share.setDrawingCacheEnabled(true);
+//                ll_share.buildDrawingCache();
+//                Bitmap bitmap = ll_share.getDrawingCache();
+//                int w = ll_share.getMeasuredWidth();
+//                int h = ll_share.getMeasuredHeight();
+//                Bitmap bitmap = loadBitmapFromView(view,w,h,true);
+//                CommonUtils.writeBitmap(new File(path),bitmap,100,true);
+
                 return true;
         }
         //处理其他菜单点击事件
         return super.onOptionsItemSelected(item);
+    }
+
+    public Bitmap loadBitmapFromView(View view, int width, int height, boolean hasMeasure) {
+        if (view == null) {
+            return null;
+        }
+        view.measure(view.getLayoutParams().width, view.getLayoutParams().height);
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        // 生成bitmap
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        // 利用bitmap生成画布
+        Canvas canvas = new Canvas(bitmap);
+        // 把view中的内容绘制在画布上
+        view.draw(canvas);
+
+        return bitmap;
     }
 
     @Override
@@ -261,5 +381,45 @@ public class AddNotepadActivity extends AppCompatActivity implements IAddNotepad
                 mAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    /**
+     * 纵向拼接
+     * <功能详细描述>
+     * @return
+     */
+    private Bitmap addBitmap(List<Bitmap> list) {
+        int width = 0;
+        int height = 0;
+        float sc = 1f;
+        for (Bitmap bitmap : list){
+            if(null != bitmap && !bitmap.isRecycled()){
+                if(width < bitmap.getWidth()){
+                    width = bitmap.getWidth();
+                }
+                height += bitmap.getHeight();
+            }
+        }
+        if(width > 720){
+            sc = 720f / width;
+            width = 720;
+        }
+        height = (int) (height * sc);
+        Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(result);
+        canvas.drawColor(Color.WHITE);//绘制透明色
+        int currentHeight = 0;
+        for (Bitmap bitmap : list){
+            if(null != bitmap && !bitmap.isRecycled()) {
+                Rect rect = new Rect();
+                rect.top = currentHeight;
+                rect.left = 0;
+                rect.right = (int) (bitmap.getWidth() *sc);
+                rect.bottom = rect.top + (int) (bitmap.getHeight() * sc);
+                currentHeight += (int) (bitmap.getHeight()*sc);
+                canvas.drawBitmap(bitmap, null, rect, null);
+            }
+        }
+        return result;
     }
 }

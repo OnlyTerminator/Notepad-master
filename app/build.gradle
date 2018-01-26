@@ -10,6 +10,13 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
         versionName "2.0"
+
+        buildConfigField("String", "SHARE_KEY_WEIXIN", "\"wxbe5772231d5d0bfe\"")
+        buildConfigField("String", "SHARE_KEY_WEIXIN_SECRET", "\"2b51112a0468664ec2c9f26422a867d3\"")
+        buildConfigField("String", "SHARE_KEY_SINA", "\"2197263330\"")
+        buildConfigField("String", "SHARE_KEY_QQ", "\"1106131934\"")
+        buildConfigField("String", "SHARE_SINA_OAUTH_URL", "\"\"")
+        buildConfigField("String", "SHARE_SINA_OAUTH_SCOPE", "\"\"")
     }
 
     lintOptions {
@@ -53,9 +60,11 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:cardview-v7:+'
     compile 'com.github.donkingliang:ImageSelector:1.0.1'
-    compile 'com.aotuman.share:android-share1.0:1.0.0'
+    compile project(':ShareModule')
     compile project(':APPWidgetModule')
     compile project(':NoteBaseModule')
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.code.gson:gson:2.8.1'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.8'
 }

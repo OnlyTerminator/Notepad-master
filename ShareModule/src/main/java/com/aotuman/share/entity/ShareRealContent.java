@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -25,20 +24,21 @@ public class ShareRealContent implements Serializable {
      */
     public String mShareURL;
 
-    public boolean mNeedAddQRCode = true;
-
     /**
-     * 如果有本地图片分享的时候默认选择本地图片
+     * 由于第三方只支持分享本地图片，所以我们也是，如果需要分享网络图片，请先自行下载。
      */
     public String mShareLocalImage;
 
-    public String mShareNetImage;
     /**
-     * 分享形式是h5时候前面的缩略图，调用分享的时候自己设置，默认为ICON
+     * 需要分享的bitmap,如果有，会优先使用这个不会在根据mShareLocalImage自行生成bitmap
      */
-    public String mThumbPath;
+    public Bitmap mShareBitmap;
 
     public ShareContentType mShareContentType;
+
+    public String mShareVideoUrl;
+
+    public String mShareMusicUrl;
 
     public ShareRealContent(String title, String content) {
         mShareTitle = title;
@@ -48,25 +48,15 @@ public class ShareRealContent implements Serializable {
     public Bitmap getThumbBitmap(Context context) {
         Bitmap bitmap = null;
         try {
-            if (TextUtils.isEmpty(mThumbPath)) {
+            if (null == mShareBitmap) {
                 if (!TextUtils.isEmpty(mShareLocalImage)) {
                     if (mShareLocalImage.startsWith("/")) {
                         mShareLocalImage = "file://" + mShareLocalImage;
                     }
                     bitmap = BitmapFactory.decodeFile(mShareLocalImage);
-                } else if (!TextUtils.isEmpty(mShareNetImage)) {
-                    if (mShareNetImage.startsWith("/")) {
-                        mShareNetImage = "file://" + mShareNetImage;
-                    }
-                    bitmap = BitmapFactory.decodeFile(mShareNetImage);
                 }
             } else {
-                if (!TextUtils.isEmpty(mThumbPath)) {
-                    if (mThumbPath.startsWith("/")) {
-                        mThumbPath = "file://" + mThumbPath;
-                    }
-                    bitmap = BitmapFactory.decodeFile(mThumbPath);
-                }
+                bitmap = mShareBitmap;
             }
         } catch (Exception e) {
             Log.e("ShareContent", e.toString());

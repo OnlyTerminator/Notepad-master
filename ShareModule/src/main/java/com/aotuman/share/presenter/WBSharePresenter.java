@@ -3,6 +3,7 @@ package com.aotuman.share.presenter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.aotuman.share.ThumbBitmapManager;
 import com.aotuman.share.entity.ShareRealContent;
@@ -18,6 +19,7 @@ import com.sina.weibo.sdk.utils.Utility;
  */
 
 public class WBSharePresenter {
+    private static final String TAG = "WBSharePresenter";
     private Context mContext;
 
     public WBSharePresenter(Context context) {
@@ -45,6 +47,8 @@ public class WBSharePresenter {
                     weiboMultiMessage.mediaObject = getWebPageObj(shareContent);
                 }
                 break;
+            default:
+                throw new UnsupportedOperationException("createShareObject: not support this type");
         }
         if (!weiboMultiMessage.checkArgs()) {
             return null;
@@ -66,14 +70,16 @@ public class WBSharePresenter {
      */
     private ImageObject getImageObj(ShareRealContent shareContent) {
         ImageObject imageObject = new ImageObject();
-
-        if (TextUtils.isEmpty(shareContent.mShareLocalImage)) {
-            Bitmap b = shareContent.getThumbBitmap(mContext);
-            if (null != b) {
-                imageObject.setImageObject(b);
+        Bitmap b = shareContent.getThumbBitmap(mContext);
+        if (null != b) {
+            imageObject.setThumbImage(b);
+        }
+        if(null != shareContent.mShareBitmap) {
+            imageObject.setImageObject(shareContent.mShareBitmap);
+        }else {
+            if (!TextUtils.isEmpty(shareContent.mShareLocalImage)) {
+                imageObject.imagePath = shareContent.mShareLocalImage;
             }
-        } else {
-            imageObject.imagePath = shareContent.mShareLocalImage;
         }
         return imageObject;
     }

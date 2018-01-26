@@ -60,12 +60,9 @@ public class QQLoginActivity extends Activity {
 
     private ThirdLoginInfo handleResult(JSONObject object) {
         ThirdLoginInfo mThirdLoginInfo = new ThirdLoginInfo();
-        String loginName = object.optString("nickname");
-        String loginHead = object.optString("figureurl_qq_1");
         mThirdLoginInfo.access_token = mTencent.getAccessToken();
-        mThirdLoginInfo.login_name = mTencent.getOpenId();
-        mThirdLoginInfo.nick = loginName;
-        mThirdLoginInfo.face = loginHead;
+        mThirdLoginInfo.uid = mTencent.getOpenId();
+        mThirdLoginInfo.thirdJson = object.toString();
         return mThirdLoginInfo;
     }
 

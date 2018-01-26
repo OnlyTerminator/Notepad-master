@@ -26,6 +26,6 @@ public class ATMApplication extends Application{
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         NotepadApplication.initContext(base);
-        ShareNewConfig.initShareKey("wxbe5772231d5d0bfe","2b51112a0468664ec2c9f26422a867d3","2197263330","1106131934","");
+        ShareNewConfig.initShareKey(BuildConfig.SHARE_KEY_WEIXIN,BuildConfig.SHARE_KEY_WEIXIN_SECRET,BuildConfig.SHARE_KEY_SINA,BuildConfig.SHARE_KEY_QQ,BuildConfig.SHARE_SINA_OAUTH_URL,BuildConfig.SHARE_SINA_OAUTH_SCOPE);
     }
 }

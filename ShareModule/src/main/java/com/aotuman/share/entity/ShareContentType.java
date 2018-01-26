@@ -7,6 +7,9 @@ public enum ShareContentType {
     TEXT,
     PIC,
     WEBPAGE,
-    PICANDTEXT
+    PICANDTEXT,
+    MUSIC,
+    APP,
+    VIDEO
 
 }

@@ -2,7 +2,6 @@ package com.aotuman.share.entity;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.util.ArrayMap;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -101,39 +100,30 @@ public class ShareContentConfig implements Serializable {
             return this;
         }
 
+        public Builder shareVideo(String video) {
+            qqContent.mShareVideoUrl = video;
+            wbContent.mShareVideoUrl = video;
+            wxCContent.mShareVideoUrl = video;
+            wxFContent.mShareVideoUrl = video;
+            smsContent.mShareVideoUrl = video;
+            return this;
+        }
+
+        public Builder shareMusic(String music) {
+            qqContent.mShareMusicUrl = music;
+            wbContent.mShareMusicUrl = music;
+            wxCContent.mShareMusicUrl = music;
+            wxFContent.mShareMusicUrl = music;
+            smsContent.mShareMusicUrl = music;
+            return this;
+        }
+
         public Builder localImagePath(String imagePath) {
             qqContent.mShareLocalImage = imagePath;
             wbContent.mShareLocalImage = imagePath;
             wxFContent.mShareLocalImage = imagePath;
             wxCContent.mShareLocalImage = imagePath;
             smsContent.mShareLocalImage = imagePath;
-            return this;
-        }
-
-        public Builder netImagePath(String imagePath) {
-            qqContent.mShareNetImage = imagePath;
-            wbContent.mShareNetImage = imagePath;
-            wxCContent.mShareNetImage = imagePath;
-            wxFContent.mShareNetImage = imagePath;
-            smsContent.mShareNetImage = imagePath;
-            return this;
-        }
-
-        public Builder thumbImagePath(String imagePath) {
-            qqContent.mThumbPath = imagePath;
-            wbContent.mThumbPath = imagePath;
-            wxCContent.mThumbPath = imagePath;
-            wxFContent.mThumbPath = imagePath;
-            smsContent.mThumbPath = imagePath;
-            return this;
-        }
-
-        public Builder needAddQRCode(boolean need) {
-            qqContent.mNeedAddQRCode = need;
-            wbContent.mNeedAddQRCode = need;
-            wxCContent.mNeedAddQRCode = need;
-            wxFContent.mNeedAddQRCode = need;
-            smsContent.mNeedAddQRCode = need;
             return this;
         }
 
@@ -193,7 +183,7 @@ public class ShareContentConfig implements Serializable {
         }
 
         private void putDefaultShareType() {
-            mShareType.put(ShareChannelType.WX_FRIEND, ShareContentType.WEBPAGE);
+            mShareType.put(ShareChannelType.WX_FRIEND, ShareContentType.PIC);
             mShareType.put(ShareChannelType.WX_TIMELINE, ShareContentType.PIC);
             mShareType.put(ShareChannelType.QQ, ShareContentType.PIC);
             mShareType.put(ShareChannelType.WB, ShareContentType.PICANDTEXT);

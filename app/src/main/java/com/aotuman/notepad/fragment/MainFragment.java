@@ -2,6 +2,7 @@ package com.aotuman.notepad.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,29 +18,23 @@ import com.aotuman.notepad.R;
 import com.aotuman.notepad.activity.AddNotepadActivity;
 import com.aotuman.notepad.adapter.MainContentAdapter;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
-import com.aotuman.notepad.base.database.NotepadDataManager;
-import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.base.entry.NotepadContentInfo;
-import com.aotuman.notepad.base.utils.SPUtils;
-import com.aotuman.notepad.base.utils.SharePreEvent;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.aotuman.notepad.presenter.MainPresenter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by 凹凸曼 on 2017/5/7.
  */
 
-public class MainFragment extends Fragment implements OnNotepadClickListener,View.OnClickListener{
+public class MainFragment extends Fragment implements OnNotepadClickListener,View.OnClickListener,MainPresenter.MainCallback{
     private View mView;
     private RecyclerView mRecycleView;
     private FloatingActionButton mButton;
     private MainContentAdapter mAdapter;
     private List<NotepadContentInfo> mNotepadList = new ArrayList<>();
+    private MainPresenter mMainPresenter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(null == mView){
@@ -66,33 +61,15 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
     }
 
     public void initData(){
-        mNotepadList.clear();
-        String group = (String) SPUtils.get(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_INFO,"");
-        GroupInfo info = new GroupInfo("未分组",0);
-        if(TextUtils.isEmpty(group)){
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("groupName",info.groupName);
-                jsonObject.put("groupCount",info.groupCount);
-                SPUtils.put(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }else {
-            try {
-                JSONObject jsonObject = new JSONObject(group);
-                info.groupName = jsonObject.getString("groupName");
-                info.groupCount = jsonObject.getInt("groupCount");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        List<NotepadContentInfo> list = NotepadDataManager.getInstance(MainFragment.this.getActivity()).findNotepadByGroup(info.groupName);
-//        Collections.reverse(list); // 倒序排列
-        mNotepadList.addAll(list);
-        mAdapter.notifyDataSetChanged();
+        mMainPresenter = new MainPresenter(this);
+        mMainPresenter.getNoteList();
     }
 
+    public void getUpdateList(){
+        if(null != mMainPresenter) {
+            mMainPresenter.getNoteList();
+        }
+    }
     @Override
     public void onClick(NotepadContentInfo info) {
         Intent intent = new Intent(MainFragment.this.getActivity(),AddNotepadActivity.class);
@@ -110,4 +87,10 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
         }
     }
 
+    @Override
+    public void updateNoteList(List<NotepadContentInfo> list) {
+        mNotepadList.clear();
+        mNotepadList.addAll(list);
+        mAdapter.notifyDataSetChanged();
+    }
 }

@@ -72,10 +72,8 @@ public class WXLoginPresenter{
             public void onComplete(String result) {
                 ThirdLoginInfo mThirdLoginInfo = new ThirdLoginInfo();
                 mThirdLoginInfo.access_token = accessToken;
-                mThirdLoginInfo.login_name = openId;
-                mThirdLoginInfo.nick = getStringFromJSON(result, "nickname");
-                mThirdLoginInfo.face = getStringFromJSON(result, "headimgurl");
-                mThirdLoginInfo.sex = getStringFromJSON(result, "sex");
+                mThirdLoginInfo.uid = openId;
+                mThirdLoginInfo.thirdJson = result;
                 LoginBackListener.getInstance().onSuccess(mThirdLoginInfo);
             }
 

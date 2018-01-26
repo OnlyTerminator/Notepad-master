@@ -73,14 +73,14 @@ public class MainActivity extends AppCompatActivity implements OnGroupClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == 1){
-            mMainFragment.initData();
+            mMainFragment.getUpdateList();
             mLeftFragment.initData();
         }
     }
 
     @Override
     public void onClick(GroupInfo groupInfo) {
-        mMainFragment.initData();
+        mMainFragment.getUpdateList();
         mDrawerLayout.closeDrawers();
     }
 }

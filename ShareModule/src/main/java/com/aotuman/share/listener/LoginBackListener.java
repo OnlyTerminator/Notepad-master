@@ -1,6 +1,5 @@
 package com.aotuman.share.listener;
 
-import com.aotuman.share.entity.ShareChannelType;
 import com.aotuman.share.entity.ThirdLoginInfo;
 
 /**
@@ -10,7 +9,6 @@ import com.aotuman.share.entity.ThirdLoginInfo;
 public class LoginBackListener implements LoginListener {
     private LoginListener mListener;
     private static LoginBackListener mInstance;
-    private ShareChannelType mChannelType;
     private LoginBackListener() {
     }
 

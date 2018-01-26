@@ -81,23 +81,13 @@ public class WBLoginActivity extends Activity implements WbAuthListener {
     private void getThirdLoginInfo(Oauth2AccessToken accessToken) {
         mThirdLoginInfo = new ThirdLoginInfo();
         mThirdLoginInfo.access_token = accessToken.getToken();
-        mThirdLoginInfo.login_name = accessToken.getUid();
+        mThirdLoginInfo.uid = accessToken.getUid();
         new Thread(){
             @Override
             public void run() {
                 try {
-                    String result = getUserInfoByUid(mThirdLoginInfo.access_token, mThirdLoginInfo.login_name);
-                    mThirdLoginInfo.nick = getStringFromJSON(result, ShareNewConfig.SINA_STR_NICK);
-                    mThirdLoginInfo.face = getStringFromJSON(result, ShareNewConfig.SINA_STR_FACE_URL);
-                    String sex = getStringFromJSON(result, ShareNewConfig.SINA_STR_SEX);
-                    if (!TextUtils.isEmpty(sex)) {
-                        if (sex.equals("m")) {
-                            mThirdLoginInfo.sex = "1";
-                        }
-                        if (sex.equals("f")) {
-                            mThirdLoginInfo.sex = "2";
-                        }
-                    }
+                    mThirdLoginInfo.thirdJson = getUserInfoByUid(mThirdLoginInfo.access_token, mThirdLoginInfo.uid);
+
                     LoginBackListener.getInstance().onSuccess(mThirdLoginInfo);
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());

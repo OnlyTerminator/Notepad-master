@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
     package="com.aotuman.share">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -9,13 +10,13 @@
         android:supportsRtl="true">
         <!-- QQ -->
         <activity
-            android:name=".activity.QQLoginActivity"
+            android:name="com.aotuman.share.activity.QQLoginActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
-            android:name=".activity.QQShareActivity"
+            android:name="com.aotuman.share.activity.QQShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -39,13 +40,13 @@
 
         <!-- weibo -->
         <activity
-            android:name=".activity.WBLoginActivity"
+            android:name="com.aotuman.share.activity.WBLoginActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
-            android:name=".activity.WBShareActivity"
+            android:name="com.aotuman.share.activity.WBShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -54,7 +55,7 @@
         <!-- 微信 -->
         <!-- 处理微信回调的Activity -->
         <activity
-            android:name=".activity.WXLoginAndShareActivity"
+            android:name="com.aotuman.share.activity.WXLoginAndShareActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -63,7 +64,7 @@
             android:name="${applicationId}.wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:targetActivity=".activity.WXLoginAndShareActivity"
+            android:targetActivity="com.aotuman.share.activity.WXLoginAndShareActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             />
     </application>

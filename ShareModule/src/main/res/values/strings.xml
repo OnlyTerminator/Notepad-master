@@ -10,16 +10,9 @@
     <string name="share_content_failed">分享失败</string>
     <string name="share_content_cancel">取消分享</string>
     <string name="share_content_success">分享成功</string>
-    <string name="mojitalk">#墨迹天气#</string>
-    <string name="publish">发布</string>
-    <string name="share_today">【今天】 </string>
-    <string name="share_tomorrow">【明天】 </string>
-    <string name="share_to">转</string>
     <string name="picture_prepareing">图片加载中…</string>
     <string name="please_wait">请稍候…</string>
     <string name="capture_screen">准备分享内容</string>
     <string name="save_picture_fail_msg">截图失败，点击分享只能分享文字。</string>
-
-    <string name="share_data_failed">分享数据获取失败，请稍后再试！</string>
-    <string name="string_not_login">未登录</string>
+    <string name="string_not_login">未登陆</string>
 </resources>

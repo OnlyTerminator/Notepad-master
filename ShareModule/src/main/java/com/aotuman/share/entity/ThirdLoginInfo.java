@@ -13,9 +13,9 @@ public class ThirdLoginInfo implements Serializable{
     /**
      * 登录名(腾讯账户 blogid,新浪账户登录名)
      */
-    public String login_name;
-    //以下参数均为三方登陆所需
-    public String nick;
-    public String face;
-    public String sex;
+    public String uid;
+    /**
+     * 第三方平台返回的用户信息json
+     */
+    public String thirdJson;
 }

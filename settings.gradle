@@ -1,1 +1,1 @@
-include ':app', ':APPWidgetModule', ':NoteBaseModule'
+include ':app', ':APPWidgetModule', ':NoteBaseModule',':ShareModule'

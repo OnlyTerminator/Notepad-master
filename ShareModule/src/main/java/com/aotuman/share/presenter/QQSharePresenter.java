@@ -1,12 +1,16 @@
 package com.aotuman.share.presenter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.aotuman.share.CommonUtils;
 import com.aotuman.share.entity.ShareRealContent;
 import com.tencent.connect.share.QQShare;
+
+import java.io.File;
 
 /**
  * Created by aotuman on 2017/7/14.
@@ -33,6 +37,12 @@ public class QQSharePresenter {
                 // 网页
                 bundle = getWebPageObj(shareContent);
                 break;
+            case MUSIC:
+                bundle = getMusicObj(shareContent);
+                break;
+            case APP:
+                bundle = getAPPObj(shareContent);
+                break;
             default:
                 throw new UnsupportedOperationException("不支持的分享内容");
         }
@@ -42,13 +52,14 @@ public class QQSharePresenter {
     private Bundle getImageObj(ShareRealContent shareContent) {
         final Bundle params = new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE); // 标识分享的是纯图片 (必填)
-        String uri = TextUtils.isEmpty(shareContent.mShareLocalImage) ? shareContent.mShareNetImage : shareContent.mShareLocalImage;
-        if (!TextUtils.isEmpty(uri)) {
-            if (uri.startsWith("http")) {
-                params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, uri); // net uri
-            } else {
-                params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, uri); // local uri
-            }
+        if (!TextUtils.isEmpty(shareContent.mShareLocalImage)) {
+            params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, shareContent.mShareLocalImage); // local uri
+        }else if(null != shareContent.mShareBitmap){
+            String path = CommonUtils.getFilesDir(mContext, "share").getAbsolutePath() + File.separator + "ATMShareImage.png";
+            CommonUtils.writeBitmap(new File(path),shareContent.mShareBitmap,100,true);
+            params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, path); // local uri
+        }else {
+            throw new UnsupportedOperationException("没有可以分享的图片地址");
         }
         return params;
     }
@@ -56,13 +67,24 @@ public class QQSharePresenter {
     private Bundle getWebPageObj(ShareRealContent shareContent) {
         final Bundle params = new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
-        String uri = TextUtils.isEmpty(shareContent.mShareLocalImage) ? shareContent.mShareNetImage : shareContent.mShareLocalImage;
-        if (!TextUtils.isEmpty(uri)) {
-            params.putString(com.tencent.connect.share.QQShare.SHARE_TO_QQ_IMAGE_URL, uri);
+        if (!TextUtils.isEmpty(shareContent.mShareURL)) {
+            params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, shareContent.mShareURL);
         }
         return params;
     }
 
+    private Bundle getMusicObj(ShareRealContent shareRealContent){
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_AUDIO);
+        params.putString(QQShare.SHARE_TO_QQ_AUDIO_URL, shareRealContent.mShareMusicUrl);
+        return params;
+    }
+
+    private Bundle getAPPObj(ShareRealContent shareRealContent){
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_APP);
+        return params;
+    }
     /**
      * @see "http://wiki.open.qq.com/wiki/mobile/API%E8%B0%83%E7%94%A8%E8%AF%B4%E6%98%8E#1.13_.E5.88.86.E4.BA.AB.E6.B6.88.E6.81.AF.E5.88.B0QQ.EF.BC.88.E6.97.A0.E9.9C.80QQ.E7.99.BB.E5.BD.95.EF.BC.89"
      * QQShare.PARAM_TITLE 	        必填 	String 	分享的标题, 最长30个字符。
