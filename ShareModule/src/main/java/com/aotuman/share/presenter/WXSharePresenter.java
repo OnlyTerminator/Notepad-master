@@ -21,9 +21,10 @@ import java.io.ByteArrayOutputStream;
  * Created by aotuman on 2017/7/14.
  */
 
-public class WXSharePresenter{
+public class WXSharePresenter {
     private ThumbBitmapManager mThumbManager;
     private Context mContext;
+
     public WXSharePresenter(Context context) {
         mThumbManager = new ThumbBitmapManager();
         mContext = context;
@@ -109,12 +110,8 @@ public class WXSharePresenter{
 
     private WXMediaMessage.IMediaObject getImageObj(ShareRealContent shareContent) {
         WXImageObject image = new WXImageObject();
-        if(null == shareContent.mShareBitmap) {
+        if(!TextUtils.isEmpty(shareContent.mShareLocalImage)){
             image.imagePath = shareContent.mShareLocalImage;
-        }else {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            shareContent.mShareBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            image.imageData = byteArrayOutputStream.toByteArray();
         }
         return image;
     }
@@ -127,7 +124,7 @@ public class WXSharePresenter{
 
     private WXMediaMessage.IMediaObject getVideoObj(ShareRealContent shareContent) {
         WXVideoObject video = new WXVideoObject();
-        if(!TextUtils.isEmpty(shareContent.mShareVideoUrl)) {
+        if (!TextUtils.isEmpty(shareContent.mShareVideoUrl)) {
             video.videoUrl = shareContent.mShareVideoUrl;
         }
         return video;
@@ -135,7 +132,7 @@ public class WXSharePresenter{
 
     private WXMediaMessage.IMediaObject getMusicObj(ShareRealContent shareContent) {
         WXMusicObject music = new WXMusicObject();
-        if(!TextUtils.isEmpty(shareContent.mShareMusicUrl)) {
+        if (!TextUtils.isEmpty(shareContent.mShareMusicUrl)) {
             music.musicUrl = shareContent.mShareMusicUrl;
         }
         return music;

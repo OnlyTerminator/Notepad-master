@@ -61,7 +61,8 @@ public class WBSharePresenter {
      */
     private TextObject getTextObj(ShareRealContent shareContent) {
         TextObject textObject = new TextObject();
-        textObject.text = shareContent.mShareSummary + shareContent.mShareURL;
+        textObject.text = (TextUtils.isEmpty(shareContent.mShareSummary) ? "":shareContent.mShareSummary)
+                + (TextUtils.isEmpty(shareContent.mShareURL) ? "":shareContent.mShareURL);
         return textObject;
     }
 
@@ -70,16 +71,8 @@ public class WBSharePresenter {
      */
     private ImageObject getImageObj(ShareRealContent shareContent) {
         ImageObject imageObject = new ImageObject();
-        Bitmap b = shareContent.getThumbBitmap(mContext);
-        if (null != b) {
-            imageObject.setThumbImage(b);
-        }
-        if(null != shareContent.mShareBitmap) {
-            imageObject.setImageObject(shareContent.mShareBitmap);
-        }else {
-            if (!TextUtils.isEmpty(shareContent.mShareLocalImage)) {
-                imageObject.imagePath = shareContent.mShareLocalImage;
-            }
+        if (!TextUtils.isEmpty(shareContent.mShareLocalImage)) {
+            imageObject.imagePath = shareContent.mShareLocalImage;
         }
         return imageObject;
     }

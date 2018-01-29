@@ -54,10 +54,6 @@ public class QQSharePresenter {
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE); // 标识分享的是纯图片 (必填)
         if (!TextUtils.isEmpty(shareContent.mShareLocalImage)) {
             params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, shareContent.mShareLocalImage); // local uri
-        }else if(null != shareContent.mShareBitmap){
-            String path = CommonUtils.getFilesDir(mContext, "share").getAbsolutePath() + File.separator + "ATMShareImage.png";
-            CommonUtils.writeBitmap(new File(path),shareContent.mShareBitmap,100,true);
-            params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, path); // local uri
         }else {
             throw new UnsupportedOperationException("没有可以分享的图片地址");
         }

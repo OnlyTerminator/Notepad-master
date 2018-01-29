@@ -15,8 +15,8 @@ android {
         buildConfigField("String", "SHARE_KEY_WEIXIN_SECRET", "\"2b51112a0468664ec2c9f26422a867d3\"")
         buildConfigField("String", "SHARE_KEY_SINA", "\"2197263330\"")
         buildConfigField("String", "SHARE_KEY_QQ", "\"1106131934\"")
-        buildConfigField("String", "SHARE_SINA_OAUTH_URL", "\"\"")
-        buildConfigField("String", "SHARE_SINA_OAUTH_SCOPE", "\"\"")
+        buildConfigField("String", "SHARE_SINA_OAUTH_URL", "\"https://github.com/OnlyTerminator/Notepad-master\"")
+        buildConfigField("String", "SHARE_SINA_OAUTH_SCOPE", "\"895cd8175f50b97bbe14b74591084970\"")
     }
 
     lintOptions {

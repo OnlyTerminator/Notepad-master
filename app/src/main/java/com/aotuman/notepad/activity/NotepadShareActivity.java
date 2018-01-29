@@ -67,6 +67,8 @@ public class NotepadShareActivity extends AppCompatActivity implements NotepadSh
                 final String path = CommonUtils.getFilesDir(this, "share").getAbsolutePath() + File.separator + "ATMShareImage.png";
                 ShareContentConfig.Builder builder = new ShareContentConfig.Builder(title,content);
                 builder.localImagePath(path);
+                builder.shareUrl("http://sj.qq.com/myapp/detail.htm?apkName=com.aotuman.notepad");
+                builder.wbFriendContent("简易便签，简单生活！");
                 mMjThirdShareManager.doShare(builder.build(),true);
                 mPresenter.prepareShareBitmap(mLLShareBase,path);
                 return true;

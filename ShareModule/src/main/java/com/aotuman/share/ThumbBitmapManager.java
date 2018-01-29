@@ -24,23 +24,19 @@ public class ThumbBitmapManager {
     public Bitmap getBigBitmap(ShareRealContent shareContent) {
         String path = shareContent.mShareLocalImage;
         Bitmap shareBmp = null;
-        if (null != shareContent.mShareBitmap) {
-            shareBmp = shareContent.mShareBitmap;
-        } else {
-            if (!TextUtils.isEmpty(path)) {
-                if (path.startsWith("/")) {
-                    path = "file://" + path;
-                }
-                try {
-                    shareBmp = BitmapFactory.decodeFile(path);
-                    if (shareBmp != null) {
-                        if (getBitmapSize(shareBmp) / 1024 > 5000) {
-                            shareBmp = compressBitmap(shareBmp, 100, 960, 1280);
-                        }
+        if (!TextUtils.isEmpty(path)) {
+            if (path.startsWith("/")) {
+                path = "file://" + path;
+            }
+            try {
+                shareBmp = BitmapFactory.decodeFile(path);
+                if (shareBmp != null) {
+                    if (getBitmapSize(shareBmp) / 1024 > 5000) {
+                        shareBmp = compressBitmap(shareBmp, 100, 960, 1280);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return shareBmp;

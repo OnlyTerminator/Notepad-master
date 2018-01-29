@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.aotuman.share.R;
+
 import java.io.Serializable;
 
 /**
@@ -48,22 +50,19 @@ public class ShareRealContent implements Serializable {
     public Bitmap getThumbBitmap(Context context) {
         Bitmap bitmap = null;
         try {
-            if (null == mShareBitmap) {
-                if (!TextUtils.isEmpty(mShareLocalImage)) {
-                    if (mShareLocalImage.startsWith("/")) {
-                        mShareLocalImage = "file://" + mShareLocalImage;
-                    }
-                    bitmap = BitmapFactory.decodeFile(mShareLocalImage);
+            String path = mShareLocalImage;
+            if (!TextUtils.isEmpty(mShareLocalImage)) {
+                if (mShareLocalImage.startsWith("/")) {
+                    path = "file://" + mShareLocalImage;
                 }
-            } else {
-                bitmap = mShareBitmap;
+                bitmap = BitmapFactory.decodeFile(path);
             }
         } catch (Exception e) {
             Log.e("ShareContent", e.toString());
         } finally {
             if (null == bitmap) {
                 try {
-                    bitmap = BitmapFactory.decodeResource(context.getResources(), android.R.drawable.btn_default);
+                    bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.wx_share_day);
                 } catch (Exception e) {
                     Log.e("ShareContent", e.toString());
                 }

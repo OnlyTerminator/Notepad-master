@@ -143,6 +143,7 @@ public class MJThirdShareManager implements DataPrepareListener {
         mChannelType = channelType;
         ShareBackListener.getInstance().setShareChannelType(mChannelType);
         if (mStatusManager.shareInstalledCheck(channelType, activity)) {
+            mDataPrepare = false;
             switch (channelType) {
                 case QQ:
                     Intent qqIntent = new Intent(activity, QQShareActivity.class);
