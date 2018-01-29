@@ -176,17 +176,15 @@ public class AddNotepadActivity extends AppCompatActivity implements AddNotepadP
                 Toast.makeText(this,"add voice success",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_share:
-                if(null == mNotepad) {
-                    mNotepad = new NotepadContentInfo();
-                }
-                mNotepad.title = mEditTitle.getText().toString();
-                mNotepad.content = mEditContent.getText().toString();
-                mNotepad.group = mTextGroup.getText().toString();
-                mNotepad.time = String.valueOf(currentTime);
-                mNotepad.imageLists = new Gson().toJson(mImagePath);
+                NotepadContentInfo notepadContentInfo = new NotepadContentInfo();
+                notepadContentInfo.title = mEditTitle.getText().toString();
+                notepadContentInfo.content = mEditContent.getText().toString();
+                notepadContentInfo.group = mTextGroup.getText().toString();
+                notepadContentInfo.time = String.valueOf(currentTime);
+                notepadContentInfo.imageLists = new Gson().toJson(mImagePath);
                 Intent intent = new Intent(this,NotepadShareActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("notepad", mNotepad);
+                bundle.putSerializable("notepad", notepadContentInfo);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 return true;
