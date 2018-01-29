@@ -16,6 +16,7 @@ import com.aotuman.share.entity.ShareRealContent;
 import com.aotuman.share.listener.DataPrepareListener;
 import com.aotuman.share.listener.ShareBackListener;
 import com.aotuman.share.listener.ShareListener;
+import com.aotuman.share.view.ShareLoadingDialog;
 import com.aotuman.share.view.SharePlatform;
 
 /**
@@ -33,6 +34,7 @@ public class MJThirdShareManager implements DataPrepareListener {
     private StatusManager mStatusManager;
     private boolean mDataPrepare;
     private ShareChannelType mChannelType;
+    private ShareLoadingDialog mShareLoading;
 
     public MJThirdShareManager(Activity activity, ShareListener listener) {
         mShareListener = listener;
@@ -76,7 +78,7 @@ public class MJThirdShareManager implements DataPrepareListener {
      * 用来展示分享popUpWindow， 以弹出底部PopupWindow的方式进行分享
      */
     private void showPlatformDialog() {
-//        dismissDialog();
+        dismissDialog();
         boolean canShowDialog = mContext != null && !mContext.isFinishing();
         if (!canShowDialog) {
             if (null != mShareListener) {
@@ -90,9 +92,9 @@ public class MJThirdShareManager implements DataPrepareListener {
                 mChannelType = type;
                 if (mDataPrepare) {
                     prepareShare(mContext, type, mShareContent.getRealContent(type), mShareListener);
-//                    dismissDialog();
+                    dismissDialog();
                 } else {
-//                    showLoadingDialog();
+                    showLoadingDialog();
                 }
             }
 
@@ -170,16 +172,32 @@ public class MJThirdShareManager implements DataPrepareListener {
         }
     }
 
+    private void showLoadingDialog(){
+        dismissDialog();
+        mShareLoading = new ShareLoadingDialog.Builder(mContext).create();
+        mShareLoading.show();
+    }
+
+    private void dismissDialog() {
+        if(null != mPlatformDialog && mPlatformDialog.isShowing()){
+            mPlatformDialog.dismiss();
+        }
+
+        if(null != mShareLoading && mShareLoading.isShowing()){
+            mShareLoading.dismiss();
+        }
+    }
+
     @Override
     public void prepareSuccess(boolean flag) {
         mDataPrepare = flag;
         if (null != mChannelType) {
             if (mDataPrepare) {
                 prepareShare(mContext, mChannelType, mShareContent.getRealContent(mChannelType), mShareListener);
-//                dismissDialog();
+                dismissDialog();
             } else {
                 Toast.makeText(mContext, "分享数据获取失败", Toast.LENGTH_LONG).show();
-//                dismissDialog();
+                dismissDialog();
             }
         }
     }

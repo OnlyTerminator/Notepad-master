@@ -24,6 +24,7 @@
 
         <activity android:name=".activity.EditGroupActivity" />
 
+        <activity android:name=".activity.NotepadShareActivity" />
         //图片选择Activity
         <activity android:name="com.donkingliang.imageselector.ImageSelectorActivity" />
 

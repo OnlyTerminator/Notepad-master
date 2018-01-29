@@ -39,6 +39,7 @@ import com.aotuman.notepad.base.utils.FileTool;
 import com.aotuman.notepad.base.utils.SPUtils;
 import com.aotuman.notepad.base.utils.SharePreEvent;
 import com.aotuman.notepad.base.utils.TimeUtils;
+import com.aotuman.notepad.fragment.MainFragment;
 import com.aotuman.notepad.presenter.AddNotepadPresenter;
 import com.aotuman.share.CommonUtils;
 import com.aotuman.share.MJThirdShareManager;
@@ -175,113 +176,23 @@ public class AddNotepadActivity extends AppCompatActivity implements AddNotepadP
                 Toast.makeText(this,"add voice success",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_share:
-                String title = mEditTitle.getText().toString();
-                String content = mEditContent.getText().toString();
-                final String path = CommonUtils.getFilesDir(this, "share").getAbsolutePath() + File.separator + "ATMShareImage.png";
-                ShareContentConfig.Builder builder = new ShareContentConfig.Builder(title,content);
-                builder.localImagePath(path);
-                mMjThirdShareManager.doShare(builder.build(),true);
-                final List<Bitmap> bitmapList = new ArrayList<>();
-                mEditTitle.buildDrawingCache();
-                mTextGroup.buildDrawingCache();
-                mEditContent.buildDrawingCache();
-                Bitmap titleBitmap = mEditTitle.getDrawingCache();
-                Bitmap groupBitmap = mTextGroup.getDrawingCache();
-                Bitmap contentBitmap = mEditContent.getDrawingCache();
-                bitmapList.add(titleBitmap);
-                bitmapList.add(groupBitmap);
-                bitmapList.add(contentBitmap);
-                Observable.create(new ObservableOnSubscribe<Object>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
-//                        Bitmap last = addBitmap(bitmapList);
-                        if(null != mImagePath && !mImagePath.isEmpty()){
-                            for (String iPath : mImagePath){
-                                if(!TextUtils.isEmpty(iPath)) {
-//                                    bitmapList.clear();
-//                                    bitmapList.add(last);
-                                    Bitmap bitmap = Picasso.with(AddNotepadActivity.this).load("file://"+iPath).get();
-                                    bitmapList.add(bitmap);
-//                                    last = addBitmap(bitmapList);
-                                }
-                            }
-                        }
-                        Bitmap last = addBitmap(bitmapList);
-                        CommonUtils.writeBitmap(new File(path),last,100,true);
-                        emitter.onNext(new Object());
-                        emitter.onComplete();
-                    }
-                }).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<Object>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-
-                            }
-
-                            @Override
-                            public void onNext(Object list) {
-
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                mMjThirdShareManager.prepareSuccess(false);
-                            }
-
-                            @Override
-                            public void onComplete() {
-                                mMjThirdShareManager.prepareSuccess(true);
-                            }
-                        });
-//                List<Bitmap> bitmapList = new ArrayList<>();
-//
-//                int count = mRecyclerView.getAdapter().getItemCount();
-//                for (int i = 0; i < count;i++){
-//                    View view = mRecyclerView.getChildAt(i);
-//                    view.buildDrawingCache();
-//                    Bitmap bitmap2 = view.getDrawingCache();
-//                    bitmapList.add(bitmap2);
-//                }
-//                Bitmap bitmap = addBitmap(bitmapList);
-//                View view = LayoutInflater.from(this).inflate(R.layout.view_notepad_share,null);
-//                LinearLayout ll_share = (LinearLayout) view.findViewById(R.id.ll_share);
-//                if(null != mImagePath && !mImagePath.isEmpty()){
-//                    for (String iPath : mImagePath) {
-//                        ImageView imageView = new ImageView(this);
-//                        Picasso.with(this).load(iPath).into(imageView);
-//                        ll_share.addView(imageView);
-//                    }
-//                }
-//                ll_share.setDrawingCacheEnabled(false);
-//                ll_share.setDrawingCacheEnabled(true);
-//                ll_share.buildDrawingCache();
-//                Bitmap bitmap = ll_share.getDrawingCache();
-//                int w = ll_share.getMeasuredWidth();
-//                int h = ll_share.getMeasuredHeight();
-//                Bitmap bitmap = loadBitmapFromView(view,w,h,true);
-//                CommonUtils.writeBitmap(new File(path),bitmap,100,true);
-
+                if(null == mNotepad) {
+                    mNotepad = new NotepadContentInfo();
+                }
+                mNotepad.title = mEditTitle.getText().toString();
+                mNotepad.content = mEditContent.getText().toString();
+                mNotepad.group = mTextGroup.getText().toString();
+                mNotepad.time = String.valueOf(currentTime);
+                mNotepad.imageLists = new Gson().toJson(mImagePath);
+                Intent intent = new Intent(this,NotepadShareActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("notepad", mNotepad);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 return true;
         }
         //处理其他菜单点击事件
         return super.onOptionsItemSelected(item);
-    }
-
-    public Bitmap loadBitmapFromView(View view, int width, int height, boolean hasMeasure) {
-        if (view == null) {
-            return null;
-        }
-        view.measure(view.getLayoutParams().width, view.getLayoutParams().height);
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-        // 生成bitmap
-        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        // 利用bitmap生成画布
-        Canvas canvas = new Canvas(bitmap);
-        // 把view中的内容绘制在画布上
-        view.draw(canvas);
-
-        return bitmap;
     }
 
     @Override
@@ -409,17 +320,36 @@ public class AddNotepadActivity extends AppCompatActivity implements AddNotepadP
         Canvas canvas = new Canvas(result);
         canvas.drawColor(Color.WHITE);//绘制透明色
         int currentHeight = 0;
-        for (Bitmap bitmap : list){
-            if(null != bitmap && !bitmap.isRecycled()) {
-                Rect rect = new Rect();
-                rect.top = currentHeight;
-                rect.left = 0;
-                rect.right = (int) (bitmap.getWidth() *sc);
-                rect.bottom = rect.top + (int) (bitmap.getHeight() * sc);
-                currentHeight += (int) (bitmap.getHeight()*sc);
-                canvas.drawBitmap(bitmap, null, rect, null);
+        for (int i = 0; i< list.size(); i++){
+            Bitmap bitmap = list.get(i);
+            if(null != bitmap && !bitmap.isRecycled()){
+                if(i < 3){
+                    canvas.drawBitmap(bitmap, 0, currentHeight, null);
+                    currentHeight += bitmap.getHeight();
+                }else {
+                    float left = (width - bitmap.getWidth() *sc) / 2;
+                    Rect rect = new Rect();
+                    rect.top = currentHeight;
+                    rect.left = (int) left;
+                    rect.right = rect.left + (int) (bitmap.getWidth() *sc);
+                    rect.bottom = rect.top + (int) (bitmap.getHeight() * sc);
+                    currentHeight += (int) (bitmap.getHeight()*sc);
+                    canvas.drawBitmap(bitmap, null, rect, null);
+                }
             }
         }
+//        for (Bitmap bitmap : list){
+//            if(null != bitmap && !bitmap.isRecycled()) {
+//                float left = (width - bitmap.getWidth() *sc) / 2;
+//                Rect rect = new Rect();
+//                rect.top = currentHeight;
+//                rect.left = (int) left;
+//                rect.right = rect.left + (int) (bitmap.getWidth() *sc);
+//                rect.bottom = rect.top + (int) (bitmap.getHeight() * sc);
+//                currentHeight += (int) (bitmap.getHeight()*sc);
+//                canvas.drawBitmap(bitmap, null, rect, null);
+//            }
+//        }
         return result;
     }
 }

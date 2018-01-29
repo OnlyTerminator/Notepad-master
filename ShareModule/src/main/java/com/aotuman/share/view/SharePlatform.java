@@ -30,7 +30,7 @@ public class SharePlatform extends Dialog {
     private LinkedHashMap<ShareChannelType, ShareContentType> mShareChannelType;
 
     public SharePlatform(Activity activity, LinkedHashMap<ShareChannelType, ShareContentType> shareContentTypeArrayMap, IShareClickCallback callback) {
-        super(activity, R.style.Daily_datail_windws);
+        super(activity, R.style.share_windows);
         View contentView = LayoutInflater.from(activity).inflate(R.layout.popup_share_platforms, null);
         mShareChannelType = shareContentTypeArrayMap;
         int height = 0;
