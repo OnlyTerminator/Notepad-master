@@ -1,12 +1,6 @@
 package com.aotuman.notepad.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Picture;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,13 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,15 +30,11 @@ import com.aotuman.notepad.base.utils.FileTool;
 import com.aotuman.notepad.base.utils.SPUtils;
 import com.aotuman.notepad.base.utils.SharePreEvent;
 import com.aotuman.notepad.base.utils.TimeUtils;
-import com.aotuman.notepad.fragment.MainFragment;
 import com.aotuman.notepad.presenter.AddNotepadPresenter;
-import com.aotuman.share.CommonUtils;
 import com.aotuman.share.MJThirdShareManager;
-import com.aotuman.share.entity.ShareContentConfig;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,15 +42,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class AddNotepadActivity extends AppCompatActivity implements AddNotepadPresenter.AddNotepadCallback {
@@ -168,7 +146,6 @@ public class AddNotepadActivity extends AppCompatActivity implements AddNotepadP
                 finish();
                 return true;
             case R.id.action_pic:
-//                Toast.makeText(this,"add pic success",Toast.LENGTH_SHORT).show();
                 //限数量的多选(比喻最多9张)
                 ImageSelectorUtils.openPhoto(AddNotepadActivity.this, REQUEST_CODE, false, 9);
                 return true;
@@ -290,64 +267,5 @@ public class AddNotepadActivity extends AppCompatActivity implements AddNotepadP
                 mAdapter.notifyDataSetChanged();
             }
         }
-    }
-
-    /**
-     * 纵向拼接
-     * <功能详细描述>
-     * @return
-     */
-    private Bitmap addBitmap(List<Bitmap> list) {
-        int width = 0;
-        int height = 0;
-        float sc = 1f;
-        for (Bitmap bitmap : list){
-            if(null != bitmap && !bitmap.isRecycled()){
-                if(width < bitmap.getWidth()){
-                    width = bitmap.getWidth();
-                }
-                height += bitmap.getHeight();
-            }
-        }
-        if(width > 720){
-            sc = 720f / width;
-            width = 720;
-        }
-        height = (int) (height * sc);
-        Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(result);
-        canvas.drawColor(Color.WHITE);//绘制透明色
-        int currentHeight = 0;
-        for (int i = 0; i< list.size(); i++){
-            Bitmap bitmap = list.get(i);
-            if(null != bitmap && !bitmap.isRecycled()){
-                if(i < 3){
-                    canvas.drawBitmap(bitmap, 0, currentHeight, null);
-                    currentHeight += bitmap.getHeight();
-                }else {
-                    float left = (width - bitmap.getWidth() *sc) / 2;
-                    Rect rect = new Rect();
-                    rect.top = currentHeight;
-                    rect.left = (int) left;
-                    rect.right = rect.left + (int) (bitmap.getWidth() *sc);
-                    rect.bottom = rect.top + (int) (bitmap.getHeight() * sc);
-                    currentHeight += (int) (bitmap.getHeight()*sc);
-                    canvas.drawBitmap(bitmap, null, rect, null);
-                }
-            }
-        }
-//        for (Bitmap bitmap : list){
-//            if(null != bitmap && !bitmap.isRecycled()) {
-//                float left = (width - bitmap.getWidth() *sc) / 2;
-//                Rect rect = new Rect();
-//                rect.top = currentHeight;
-//                rect.left = (int) left;
-//                rect.right = rect.left + (int) (bitmap.getWidth() *sc);
-//                rect.bottom = rect.top + (int) (bitmap.getHeight() * sc);
-//                currentHeight += (int) (bitmap.getHeight()*sc);
-//                canvas.drawBitmap(bitmap, null, rect, null);
-//            }
-//        }
-        return result;
     }
 }
