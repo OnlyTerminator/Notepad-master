@@ -12,14 +12,23 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.aotuman.notepad.ATMApplication;
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.activity.AddNotepadActivity;
+import com.aotuman.notepad.activity.CheckPasswordActivity;
 import com.aotuman.notepad.adapter.MainContentAdapter;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
 import com.aotuman.notepad.base.entry.NotepadContentInfo;
+import com.aotuman.notepad.base.utils.SPUtils;
+import com.aotuman.notepad.base.utils.SharePreEvent;
 import com.aotuman.notepad.presenter.MainPresenter;
+import com.leo.gesturelibray.enums.LockMode;
+import com.leo.gesturelibray.util.StringUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,18 +81,49 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
     }
     @Override
     public void onClick(NotepadContentInfo info) {
-        Intent intent = new Intent(MainFragment.this.getActivity(),AddNotepadActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("notepad", info);
-        intent.putExtra("type","content");
-        intent.putExtras(bundle);
-        getActivity().startActivityForResult(intent,0);
+        if("密码".equals(info.group)){
+            Intent intent = new Intent(getActivity(), CheckPasswordActivity.class);
+            String password = (String) SPUtils.get(getActivity(), SharePreEvent.CHECK_PASS_WORD, "");
+            if (TextUtils.isEmpty(password)) {
+                intent.putExtra("check_mode", LockMode.SETTING_PASSWORD);
+            } else {
+                intent.putExtra("check_mode", LockMode.VERIFY_PASSWORD);
+            }
+            intent.putExtra("groups",info.title);
+            getActivity().startActivityForResult(intent,0);
+        } else {
+            Intent intent = new Intent(MainFragment.this.getActivity(), AddNotepadActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("notepad", info);
+            intent.putExtra("type", "content");
+            intent.putExtras(bundle);
+            getActivity().startActivityForResult(intent, 0);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_add){
-            getActivity().startActivityForResult(new Intent(this.getActivity(), AddNotepadActivity.class),0);
+        if (v.getId() == R.id.btn_add) {
+            boolean isPass = false;
+            String group = (String) SPUtils.get(ATMApplication.getInstance(), SharePreEvent.GROUP_SELECTED_INFO, "");
+            try {
+                JSONObject jsonObject = new JSONObject(group);
+                isPass = "密码".equals(jsonObject.getString("groupName"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (isPass) {
+                Intent intent = new Intent(getActivity(), CheckPasswordActivity.class);
+                String password = (String) SPUtils.get(getActivity(), SharePreEvent.CHECK_PASS_WORD, "");
+                if (TextUtils.isEmpty(password)) {
+                    intent.putExtra("check_mode", LockMode.SETTING_PASSWORD);
+                } else {
+                    intent.putExtra("check_mode", LockMode.VERIFY_PASSWORD);
+                }
+                getActivity().startActivityForResult(intent,0);
+            } else {
+                getActivity().startActivityForResult(new Intent(this.getActivity(), AddNotepadActivity.class), 0);
+            }
         }
     }
 

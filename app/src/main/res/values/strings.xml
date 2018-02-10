@@ -10,6 +10,8 @@
     <string name="add_pic">插入图片</string>
     <string name="add_voice">插入语音</string>
     <string name="share_notepad">分享便签</string>
+    <string name="password_note">密码管理</string>
     <string name="picture_detail">图片详情</string>
     <string name="sure">确定</string>
+    <string name="password_check">密码验证</string>
 </resources>

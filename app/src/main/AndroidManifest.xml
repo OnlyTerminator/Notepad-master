@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aotuman.notepad">
-    //储存卡的读取权限
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -21,20 +21,18 @@
         <activity
             android:name=".activity.AddNotepadActivity"
             android:windowSoftInputMode="stateHidden" />
-
         <activity android:name=".activity.EditGroupActivity" />
-
         <activity android:name=".activity.NotepadShareActivity" />
         //图片选择Activity
         <activity android:name="com.donkingliang.imageselector.ImageSelectorActivity" />
-
         //图片预览Activity
-        <activity android:name="com.donkingliang.imageselector.PreviewActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
-
+        <activity
+            android:name="com.donkingliang.imageselector.PreviewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".activity.PictureDetailActivity" />
-
+        <activity android:name=".activity.PassWordActivity" />
+        <activity android:name=".activity.CheckPasswordActivity" />
     </application>
 
 </manifest>

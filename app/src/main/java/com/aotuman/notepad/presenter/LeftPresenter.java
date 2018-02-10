@@ -44,6 +44,7 @@ public class LeftPresenter extends NotePresenter<LeftPresenter.LeftCallback> {
                     groupInfos.add(new GroupInfo("未分组",0));
                     groupInfos.add(new GroupInfo("生活",0));
                     groupInfos.add(new GroupInfo("工作",0));
+                    groupInfos.add(new GroupInfo("密码",0));
                     manager.initGroupInfos(groupInfos);
                 }
                 emitter.onNext(groupInfos);

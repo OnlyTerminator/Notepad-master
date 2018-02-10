@@ -1,7 +1,6 @@
 package com.aotuman.notepad.base.entry;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by 凹凸曼 on 2017/5/7.

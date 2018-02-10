@@ -9,5 +9,6 @@ public enum SharePreEvent {
     GROUP_SELECTED_INFO,
     IS_FIRST,
     APPWIDGET_SELECT,
+    CHECK_PASS_WORD,
 
 }

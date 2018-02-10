@@ -28,39 +28,94 @@ public class NotepadDataManager {
         return instance;
     }
 
-    public void insertNotepadInfo(NotepadContentInfo info) {
+    public void insertNotepadInfo(final NotepadContentInfo info) {
         String sql = "insert into notepadinfo (title,content,notegroup,time,images)values(?,?,?,?,?)";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         db.execSQL(sql, new Object[]{info.title, info.content, info.group, info.time,info.imageLists});
         db.close();
+//        Realm realm = NoteDatabaseHelper.getInstance().getNotepadRealm();
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                realm.createObject(NotepadContentInfo.class,info);
+//            }
+//        });
+//        realm.close();
     }
 
-    public void updateNotepadTitle(int id, String title, long time, String images) {
+    public void updateNotepadTitle(final int id, final String title, final long time, String images) {
         String sql = "update notepadinfo set title = ?,time = ?, images = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         db.execSQL(sql, new Object[]{title, String.valueOf(time), images,id});
         db.close();
+//        Realm realm = NoteDatabaseHelper.getInstance().getNotepadRealm();
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                //先查找后得到User对象
+//                NotepadContentInfo user = realm.where(NotepadContentInfo.class).equalTo("id",id).findFirst();
+//                user.title = title;
+//                user.time = String.valueOf(time);
+//            }
+//        });
+//        realm.close();
     }
 
-    public void updateNotepadPic(int id,long time, String images) {
+    public void updateNotepadPic(final int id, final long time, final String images) {
         String sql = "update notepadinfo set time = ?, images = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         db.execSQL(sql, new Object[]{String.valueOf(time), images,id});
         db.close();
+//        Realm realm = NoteDatabaseHelper.getInstance().getNotepadRealm();
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                //先查找后得到User对象
+//                NotepadContentInfo user = realm.where(NotepadContentInfo.class).equalTo("id",id).findFirst();
+//                user.imageLists = images;
+//                user.time = String.valueOf(time);
+//            }
+//        });
+//        realm.close();
     }
 
-    public void updateNotepadContent(int id, String content, long time, String images) {
+    public void updateNotepadContent(final int id, final String content, final long time, final String images) {
         String sql = "update notepadinfo set content = ?,time = ?,images = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         db.execSQL(sql, new Object[]{content, String.valueOf(time), images,id});
         db.close();
+//        Realm realm = NoteDatabaseHelper.getInstance().getNotepadRealm();
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                //先查找后得到User对象
+//                NotepadContentInfo user = realm.where(NotepadContentInfo.class).equalTo("id",id).findFirst();
+//                user.imageLists = images;
+//                user.time = String.valueOf(time);
+//                user.content = content;
+//            }
+//        });
+//        realm.close();
     }
 
-    public void updateNotepadTitleAndContent(int id, String title, String content, long time,String images) {
+    public void updateNotepadTitleAndContent(final int id, final String title, final String content, final long time,final String images) {
         String sql = "update notepadinfo set title = ?,content = ?,time = ?,images = ? where id = ?";
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         db.execSQL(sql, new Object[]{title, content, String.valueOf(time), images,id});
         db.close();
+//        Realm realm = NoteDatabaseHelper.getInstance().getNotepadRealm();
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                //先查找后得到User对象
+//                NotepadContentInfo user = realm.where(NotepadContentInfo.class).equalTo("id",id).findFirst();
+//                user.imageLists = images;
+//                user.time = String.valueOf(time);
+//                user.content = content;
+//                user.title = title;
+//            }
+//        });
+//        realm.close();
     }
 
     public void deleteNotepadInfo(int id) {
@@ -68,6 +123,16 @@ public class NotepadDataManager {
         SQLiteDatabase db = mNotepadDataBaseHelp.getWritableDatabase();
         db.execSQL(sql, new Object[]{id});
         db.close();
+        //先查找到数据
+//        Realm realm = NoteDatabaseHelper.getInstance().getNotepadRealm();
+//        final RealmResults<NotepadContentInfo> notepadContentInfos = realm.where(NotepadContentInfo.class).equalTo("id",id).findAll();
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                notepadContentInfos.deleteAllFromRealm();
+//            }
+//        });
+//        realm.close();
     }
 
     public List<NotepadContentInfo> findAllNotepad() {
@@ -90,6 +155,9 @@ public class NotepadDataManager {
             cursor.close();
         }
         db.close();
+//        Realm realm = NoteDatabaseHelper.getInstance().getNotepadRealm();
+//        RealmResults<NotepadContentInfo> notepadContentInfos = realm.where(NotepadContentInfo.class).findAll();
+//        realm.close();
         return notepadContentInfos;
     }
 
@@ -113,6 +181,10 @@ public class NotepadDataManager {
             cursor.close();
         }
         db.close();
+//        Realm realm = NoteDatabaseHelper.getInstance().getNotepadRealm();
+//        RealmResults<NotepadContentInfo> notepadContentInfos = realm.where(NotepadContentInfo.class).equalTo("group",groupName).findAll();
+//        notepadContentInfos.sort("time", Sort.DESCENDING);
+//        realm.close();
         return notepadContentInfos;
     }
 }

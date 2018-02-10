@@ -61,7 +61,7 @@ public class EditGroupActivity extends AppCompatActivity implements EditGroupPre
         mAdapter.setOnEditGroupClickListener(new OnGroupEditClickListener() {
             @Override
             public void onClick(View view, GroupInfo groupInfo, int position) {
-                if (position < 3) {
+                if (position < 4) {
                     Toast.makeText(EditGroupActivity.this, "默认分组不可以修改喔！", Toast.LENGTH_SHORT).show();
                 } else {
                     presenter.addNoteGroup(EditGroupActivity.this, groupInfo.groupName);

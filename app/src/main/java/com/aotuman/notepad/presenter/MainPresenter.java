@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.aotuman.notepad.ATMApplication;
 import com.aotuman.notepad.base.NotePresenter;
+import com.aotuman.notepad.base.database.NotePassGroupDataManager;
 import com.aotuman.notepad.base.database.NotepadDataManager;
 import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.base.entry.NotepadContentInfo;
@@ -57,7 +58,11 @@ public class MainPresenter extends NotePresenter<MainPresenter.MainCallback> {
                         e.printStackTrace();
                     }
                 }
-                emitter.onNext(NotepadDataManager.getInstance(ATMApplication.getInstance()).findNotepadByGroup(info.groupName));
+                if("密码".equals(info.groupName)){
+                    emitter.onNext(NotePassGroupDataManager.getInstance(ATMApplication.getInstance()).findAllPasswordGroups2(info.groupName));
+                }else {
+                    emitter.onNext(NotepadDataManager.getInstance(ATMApplication.getInstance()).findNotepadByGroup(info.groupName));
+                }
                 emitter.onComplete();
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程

@@ -47,7 +47,7 @@ public class EditNotepadGroupAdapter extends RecyclerView.Adapter<EditNotepadGro
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         GroupInfo groupInfo = mGroupInfoList.get(position);
-        if(position < 3){
+        if(position < 4){
             holder.iv_group_delete.setVisibility(View.INVISIBLE);
             holder.itemView.setBackgroundResource(R.color.appWhite);
         }

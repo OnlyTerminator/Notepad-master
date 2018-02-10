@@ -57,7 +57,16 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
             }else {
                 holder.tv_content_title.setText(title);
             }
-            holder.tv_content_time.setText(TimeUtils.timeStampToDate(Long.parseLong(notepatContentInfo.time)));
+            if(!TextUtils.isEmpty(notepatContentInfo.time)) {
+                holder.tv_content_time.setText(TimeUtils.timeStampToDate(Long.parseLong(notepatContentInfo.time)));
+            }else {
+                holder.tv_content_time.setText(TimeUtils.timeStampToDate(System.currentTimeMillis()));
+            }
+            if("密码".equals(notepatContentInfo.group)){
+                holder.iv_content_icon.setImageResource(R.drawable.notepad_password);
+            }else {
+                holder.iv_content_icon.setImageResource(R.drawable.icon);
+            }
             holder.rl_main_content.setTag(notepatContentInfo);
         }
 
