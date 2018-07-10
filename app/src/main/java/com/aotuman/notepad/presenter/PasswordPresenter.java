@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aotuman.notepad.ATMApplication;
-import com.aotuman.notepad.R;
 import com.aotuman.notepad.base.NotePresenter;
 import com.aotuman.notepad.base.database.NoteGroupDataManager;
 import com.aotuman.notepad.base.database.NotePassGroupDataManager;
@@ -18,20 +16,19 @@ import com.aotuman.notepad.base.entry.PassGroupInfo;
 import com.aotuman.notepad.base.entry.PasswordInfo;
 import com.aotuman.notepad.base.utils.SPUtils;
 import com.aotuman.notepad.base.utils.SharePreEvent;
+import com.aotuman.notepad.view.SnackbarUtil;
 import com.aotuman.notepad.view.GroupInfoDialog;
 import com.aotuman.notepad.view.PasswordInfoDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -89,32 +86,15 @@ public class PasswordPresenter extends NotePresenter<PasswordPresenter.NotePassw
         }
     }
     public void deletePassword(View view, final PasswordInfo passwordInfo) {
-        Snackbar snackbar = Snackbar.make(view, "主人，我被删除之后是不可恢复的哦！", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+        SnackbarUtil.showSnackbar(view, "主人，我被删除之后是不可恢复的哦！", new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 NotePasswordDataManager manager = NotePasswordDataManager.getInstance(ATMApplication.getInstance());
                 manager.deletePasswordInfo(passwordInfo.title, passwordInfo.groups);
                 initGroupInfo(passwordInfo.groups);
             }
         });
-        snackbar.setActionTextColor(0xffffffff);
-        setSnackbarColor(snackbar, 0xffffffff, 0xfff44336);
-        snackbar.show();
 
-    }
-
-    /**
-     * 设置Snackbar背景颜色
-     *
-     * @param snackbar
-     * @param backgroundColor
-     */
-    private void setSnackbarColor(Snackbar snackbar, int messageColor, int backgroundColor) {
-        View view = snackbar.getView();//获取Snackbar的view
-        if (view != null) {
-            view.setBackgroundColor(backgroundColor);//修改view的背景色
-            ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(messageColor);//获取Snackbar的message控件，修改字体颜色
-        }
     }
     public void showGroupInfoDIalog(Activity activity) {
         GroupInfoDialog.Builder builder = new GroupInfoDialog.Builder(activity);
@@ -135,7 +115,9 @@ public class PasswordPresenter extends NotePresenter<PasswordPresenter.NotePassw
                                         GroupInfo info = new GroupInfo();
                                         info.groupName = jsonObject.getString("groupName");
                                         info.groupCount = jsonObject.getInt("groupCount");
-                                        NoteGroupDataManager.getInstance(ATMApplication.getInstance()).updateGroupInfo(info.groupName, ++info.groupCount);
+                                        jsonObject.put("groupCount",++info.groupCount);
+                                        NoteGroupDataManager.getInstance(ATMApplication.getInstance()).updateGroupInfo(info.groupName,info.groupCount);
+                                        SPUtils.put(ATMApplication.getInstance(),SharePreEvent.GROUP_SELECTED_INFO,jsonObject.toString());
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

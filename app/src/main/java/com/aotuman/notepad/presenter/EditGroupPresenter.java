@@ -14,6 +14,7 @@ import com.aotuman.notepad.base.NotePresenter;
 import com.aotuman.notepad.base.database.NoteGroupDataManager;
 import com.aotuman.notepad.base.entry.GroupInfo;
 import com.aotuman.notepad.view.GroupInfoDialog;
+import com.aotuman.notepad.view.SnackbarUtil;
 
 import java.util.List;
 
@@ -81,33 +82,15 @@ public class EditGroupPresenter extends NotePresenter<EditGroupPresenter.EditCal
     }
 
     public void deleteNoteGroup(View view,final GroupInfo groupInfo){
-        {
-            Snackbar snackbar = Snackbar.make(view, "主人，您真的不需要我了吗？", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NoteGroupDataManager.getInstance(ATMApplication.getInstance()).deleteNotepadInfo(groupInfo.groupName);
-                    getGroupInfo();
-                }
-            });
-            snackbar.setActionTextColor(0xffffffff);
-            setSnackbarColor(snackbar, 0xffffffff, 0xfff44336);
-            snackbar.show();
-        }
+        SnackbarUtil.showSnackbar(view, "主人，您真的不需要我了吗？", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NoteGroupDataManager.getInstance(ATMApplication.getInstance()).deleteNotepadInfo(groupInfo.groupName);
+                getGroupInfo();
+            }
+        });
     }
 
-    /**
-     * 设置Snackbar背景颜色
-     *
-     * @param snackbar
-     * @param backgroundColor
-     */
-    private void setSnackbarColor(Snackbar snackbar, int messageColor, int backgroundColor) {
-        View view = snackbar.getView();//获取Snackbar的view
-        if (view != null) {
-            view.setBackgroundColor(backgroundColor);//修改view的背景色
-            ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(messageColor);//获取Snackbar的message控件，修改字体颜色
-        }
-    }
     public interface EditCallback extends NotePresenter.ICallback{
         void updateGroupView(List<GroupInfo> list);
     }

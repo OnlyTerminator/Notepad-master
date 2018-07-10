@@ -19,6 +19,7 @@ import com.aotuman.notepad.R;
 import com.aotuman.notepad.activity.AddNotepadActivity;
 import com.aotuman.notepad.activity.CheckPasswordActivity;
 import com.aotuman.notepad.adapter.MainContentAdapter;
+import com.aotuman.notepad.adapter.callback.OnItemLongClickListener;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
 import com.aotuman.notepad.base.entry.NotepadContentInfo;
 import com.aotuman.notepad.base.utils.SPUtils;
@@ -37,7 +38,7 @@ import java.util.List;
  * Created by 凹凸曼 on 2017/5/7.
  */
 
-public class MainFragment extends Fragment implements OnNotepadClickListener,View.OnClickListener,MainPresenter.MainCallback{
+public class MainFragment extends Fragment implements OnNotepadClickListener,View.OnClickListener,MainPresenter.MainCallback,OnItemLongClickListener<NotepadContentInfo>{
     private View mView;
     private RecyclerView mRecycleView;
     private FloatingActionButton mButton;
@@ -65,6 +66,7 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new MainContentAdapter(mNotepadList, MainFragment.this.getActivity());
         mAdapter.setOnNotepadClickListener(this);
+        mAdapter.setOnNotepadLongClickListener(this);
         mRecycleView.setAdapter(mAdapter);
         mButton.setOnClickListener(this);
     }
@@ -132,5 +134,10 @@ public class MainFragment extends Fragment implements OnNotepadClickListener,Vie
         mNotepadList.clear();
         mNotepadList.addAll(list);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View view, NotepadContentInfo notepadContentInfo) {
+        mMainPresenter.deleteNotepad(view,notepadContentInfo);
     }
 }

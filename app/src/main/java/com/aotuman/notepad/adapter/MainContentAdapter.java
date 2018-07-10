@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aotuman.notepad.R;
+import com.aotuman.notepad.adapter.callback.OnItemLongClickListener;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
 import com.aotuman.notepad.base.entry.NotepadContentInfo;
 import com.aotuman.notepad.base.utils.TimeUtils;
@@ -28,6 +29,7 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
     private LayoutInflater mLayoutInflater;
     private View mSelectedView;
     private OnNotepadClickListener mOnListener;
+    private OnItemLongClickListener<NotepadContentInfo> mOnItemLongListener;
     private int mBackground;
     public MainContentAdapter(List<NotepadContentInfo> contentInfoList, Context context) {
         this.mContentInfoList = contentInfoList;
@@ -82,6 +84,10 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
         this.mOnListener = listener;
     }
 
+    public void setOnNotepadLongClickListener(OnItemLongClickListener<NotepadContentInfo> listener){
+        this.mOnItemLongListener = listener;
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_content_title;
         private TextView tv_content_time;
@@ -102,6 +108,17 @@ public class MainContentAdapter extends RecyclerView.Adapter<MainContentAdapter.
                         NotepadContentInfo info = null == obj ? null : (NotepadContentInfo) obj;
                         mOnListener.onClick(info);
                     }
+                }
+            });
+            rl_main_content.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if(null != mOnItemLongListener){
+                        Object obj = rl_main_content.getTag();
+                        NotepadContentInfo info = null == obj ? null : (NotepadContentInfo) obj;
+                        mOnItemLongListener.onClick(view,info);
+                    }
+                    return true;
                 }
             });
         }
