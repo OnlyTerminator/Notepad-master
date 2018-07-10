@@ -8,8 +8,8 @@ android {
         applicationId "com.aotuman.notepad"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "3.0"
+        versionCode 100
+        versionName "1.0.0"
 
         buildConfigField("String", "SHARE_KEY_WEIXIN", "\"wxbe5772231d5d0bfe\"")
         buildConfigField("String", "SHARE_KEY_WEIXIN_SECRET", "\"2b51112a0468664ec2c9f26422a867d3\"")
