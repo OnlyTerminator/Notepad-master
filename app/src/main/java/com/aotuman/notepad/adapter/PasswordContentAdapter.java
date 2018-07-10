@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aotuman.notepad.R;
+import com.aotuman.notepad.adapter.callback.OnItemClickListener;
+import com.aotuman.notepad.adapter.callback.OnItemLongClickListener;
 import com.aotuman.notepad.adapter.callback.OnNotepadClickListener;
 import com.aotuman.notepad.base.entry.NotepadContentInfo;
 import com.aotuman.notepad.base.entry.PasswordInfo;
@@ -25,13 +27,12 @@ import java.util.List;
 
 public class PasswordContentAdapter extends RecyclerView.Adapter<PasswordContentAdapter.MyViewHolder> {
     private List<PasswordInfo> mPasswordInfo;
-    private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private OnNotepadClickListener mOnListener;
+    private OnItemClickListener<PasswordInfo> mOnListener;
+    private OnItemLongClickListener<PasswordInfo> mOnLongListener;
     private int mBackground;
     public PasswordContentAdapter(List<PasswordInfo> contentInfoList, Context context) {
         this.mPasswordInfo = contentInfoList;
-        this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, typedValue, true);
@@ -54,6 +55,7 @@ public class PasswordContentAdapter extends RecyclerView.Adapter<PasswordContent
             holder.tv_pass_title.setText(passwordInfo.title);
             holder.tv_pass_name.setText(passwordInfo.name);
             holder.tv_pass_word.setText(passwordInfo.password);
+            holder.itemView.setTag(passwordInfo);
         }
 
     }
@@ -64,11 +66,15 @@ public class PasswordContentAdapter extends RecyclerView.Adapter<PasswordContent
     }
 
 
-    public void setOnNotepadClickListener(OnNotepadClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener<PasswordInfo> listener){
         this.mOnListener = listener;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    public void setOnItemLongClickListener(OnItemLongClickListener<PasswordInfo> listener){
+        this.mOnLongListener = listener;
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
         private TextView tv_pass_title;
         private TextView tv_pass_name;
         private TextView tv_pass_word;
@@ -77,6 +83,29 @@ public class PasswordContentAdapter extends RecyclerView.Adapter<PasswordContent
             tv_pass_name = (TextView) itemView.findViewById(R.id.tv_pass_name);
             tv_pass_title = (TextView) itemView.findViewById(R.id.tv_pass_title);
             tv_pass_word = (TextView) itemView.findViewById(R.id.tv_pass_word);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Object object = view.getTag();
+            if(null != object && object instanceof PasswordInfo) {
+                if (null != mOnListener) {
+                    mOnListener.onClick((PasswordInfo) object);
+                }
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            Object object = view.getTag();
+            if(null != object && object instanceof PasswordInfo) {
+                if (null != mOnLongListener) {
+                    mOnLongListener.onClick(view,(PasswordInfo) object);
+                }
+            }
+            return true;
         }
     }
 }

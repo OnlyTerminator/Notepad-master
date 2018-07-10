@@ -1,10 +1,14 @@
 package com.aotuman.notepad.presenter;
 
 import android.app.Activity;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aotuman.notepad.ATMApplication;
+import com.aotuman.notepad.R;
 import com.aotuman.notepad.base.NotePresenter;
 import com.aotuman.notepad.base.database.NoteGroupDataManager;
 import com.aotuman.notepad.base.database.NotePassGroupDataManager;
@@ -41,22 +45,77 @@ public class PasswordPresenter extends NotePresenter<PasswordPresenter.NotePassw
         super(callback);
     }
 
-    public void showPasswordInfoDIalog(Activity activity, final String groups) {
+    public void showPasswordInfoDIalog(final Activity activity, final String groups) {
         PasswordInfoDialog.Builder builder = new PasswordInfoDialog.Builder(activity);
-        PasswordInfoDialog dialog = builder.setContent("")
+        PasswordInfoDialog dialog = builder
                 .setPositiveButton(new PasswordInfoDialog.PositiveOnClickListener() {
                     @Override
                     public void onClick(String title, String name, String pass) {
-                        PasswordInfo info = new PasswordInfo(title, name, pass, groups);
-                        mCallback.addpasswordInfo(info);
-                        NotePasswordDataManager manager = NotePasswordDataManager.getInstance(ATMApplication.getInstance());
-                        manager.insertPasswordInfo(info);
+                        PasswordInfo info = TextUtils.isEmpty(title) ? null :
+                                new PasswordInfo(title, name, pass, groups);
+                        doSaveInfo(activity,info,true);
                     }
                 }).creat();
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.show();
     }
 
+    public void showPasswordInfo(final Activity activity, final PasswordInfo passwordInfo) {
+        PasswordInfoDialog.Builder builder = new PasswordInfoDialog.Builder(activity);
+        PasswordInfoDialog dialog = builder.setPassword(passwordInfo.password)
+                .setTitle(passwordInfo.title)
+                .setName(passwordInfo.name)
+                .setPositiveButton(new PasswordInfoDialog.PositiveOnClickListener() {
+                    @Override
+                    public void onClick(String title, String name, String pass) {
+                        PasswordInfo info = TextUtils.isEmpty(title) ? null :
+                                new PasswordInfo(title, name, pass, passwordInfo.groups);
+                        doSaveInfo(activity,info,false);
+                    }
+                }).creat();
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
+    private void doSaveInfo(Activity activity,PasswordInfo info,boolean needAdd){
+        if(null != info) {
+            if(needAdd) {
+                mCallback.addpasswordInfo(info);
+            }
+            NotePasswordDataManager manager = NotePasswordDataManager.getInstance(ATMApplication.getInstance());
+            manager.insertPasswordInfo(info);
+        }else {
+            Toast.makeText(activity,"账号来源是必填信息哦~",Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void deletePassword(View view, final PasswordInfo passwordInfo) {
+        Snackbar snackbar = Snackbar.make(view, "主人，我被删除之后是不可恢复的哦！", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotePasswordDataManager manager = NotePasswordDataManager.getInstance(ATMApplication.getInstance());
+                manager.deletePasswordInfo(passwordInfo.title, passwordInfo.groups);
+                initGroupInfo(passwordInfo.groups);
+            }
+        });
+        snackbar.setActionTextColor(0xffffffff);
+        setSnackbarColor(snackbar, 0xffffffff, 0xfff44336);
+        snackbar.show();
+
+    }
+
+    /**
+     * 设置Snackbar背景颜色
+     *
+     * @param snackbar
+     * @param backgroundColor
+     */
+    private void setSnackbarColor(Snackbar snackbar, int messageColor, int backgroundColor) {
+        View view = snackbar.getView();//获取Snackbar的view
+        if (view != null) {
+            view.setBackgroundColor(backgroundColor);//修改view的背景色
+            ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(messageColor);//获取Snackbar的message控件，修改字体颜色
+        }
+    }
     public void showGroupInfoDIalog(Activity activity) {
         GroupInfoDialog.Builder builder = new GroupInfoDialog.Builder(activity);
         builder.setContent("")

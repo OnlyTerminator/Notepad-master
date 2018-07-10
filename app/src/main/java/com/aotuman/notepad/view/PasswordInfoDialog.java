@@ -33,15 +33,15 @@ public class PasswordInfoDialog extends Dialog {
         private Context mContext;
         private String mTitle;
         private String mName;
-        private String mContent;
+        private String mPassword;
         private PositiveOnClickListener positiveButtonClickListener;
 
         public Builder(Context context) {
             this.mContext = context;
         }
 
-        public Builder setContent(String content) {
-            this.mContent = content;
+        public Builder setPassword(String password) {
+            this.mPassword = password;
             return this;
         }
 
@@ -76,8 +76,8 @@ public class PasswordInfoDialog extends Dialog {
                 editTitle.setText(mTitle);
             }
 
-            if (!TextUtils.isEmpty(mContent)) {
-                editPass.setText(mContent);
+            if (!TextUtils.isEmpty(mPassword)) {
+                editPass.setText(mPassword);
             }
 
             if (!TextUtils.isEmpty(mName)) {

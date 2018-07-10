@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.aotuman.notepad.R;
 import com.aotuman.notepad.adapter.PasswordContentAdapter;
+import com.aotuman.notepad.adapter.callback.OnItemClickListener;
+import com.aotuman.notepad.adapter.callback.OnItemLongClickListener;
 import com.aotuman.notepad.base.entry.PasswordInfo;
 import com.aotuman.notepad.presenter.PasswordPresenter;
 
@@ -73,6 +75,18 @@ public class PassWordActivity extends AppCompatActivity implements PasswordPrese
         mAddButton.setOnClickListener(this);
         mAdapter = new PasswordContentAdapter(mListInfo,this);
         mRecycleView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener<PasswordInfo>() {
+            @Override
+            public void onClick(PasswordInfo passwordInfo) {
+                mPresenter.showPasswordInfo(PassWordActivity.this,passwordInfo);
+            }
+        });
+        mAdapter.setOnItemLongClickListener(new OnItemLongClickListener<PasswordInfo>() {
+            @Override
+            public void onClick(View view,PasswordInfo passwordInfo) {
+                mPresenter.deletePassword(view,passwordInfo);
+            }
+        });
     }
 
     @Override
