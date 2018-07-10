@@ -150,7 +150,7 @@ public class AddNotepadActivity extends AppCompatActivity implements AddNotepadP
                 ImageSelectorUtils.openPhoto(AddNotepadActivity.this, REQUEST_CODE, false, 9);
                 return true;
             case R.id.action_voice:
-                Toast.makeText(this,"add voice success",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"暂未实现，程序猿妹妹正在努力开发中！",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_share:
                 NotepadContentInfo notepadContentInfo = new NotepadContentInfo();
